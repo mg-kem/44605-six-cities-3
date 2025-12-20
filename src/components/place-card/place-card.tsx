@@ -1,7 +1,6 @@
-
 import { Offer } from '../../types';
 
-export default function PlaceCard(offer: Offer): JSX.Element {
+export default function PlaceCard({ offer }: { offer: Offer }): JSX.Element {
   const { price, img, title, type, rating, isFavorite, premium } = offer;
   const ratingWidth = rating ? `${Math.round((rating / 5) * 100)}%` : '0%';
 
