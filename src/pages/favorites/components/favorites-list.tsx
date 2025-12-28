@@ -4,7 +4,6 @@ import { IFavoritesListProps } from '../../../types.props';
 import { Fragment } from 'react';
 
 export default function FavoritesList({ offers }: IFavoritesListProps): JSX.Element {
-
   return (
     <ul className="favorites__list">
       {offers.map((offer) => (
@@ -13,7 +12,7 @@ export default function FavoritesList({ offers }: IFavoritesListProps): JSX.Elem
             <div className="favorites__locations locations locations--current">
               <div className="locations__item">
                 <Link className="locations__item-link" to="#">
-                  <span>Amsterdam</span>
+                  <span>{offer.city.name}</span>
                 </Link>
               </div>
             </div>
@@ -22,35 +21,7 @@ export default function FavoritesList({ offers }: IFavoritesListProps): JSX.Elem
             </div>
           </li>
         </Fragment>
-
       ))}
-
-      {/* <li className="favorites__locations-items">
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <Link className="locations__item-link" to="#">
-              <span>Amsterdam</span>
-            </Link>
-          </div>
-        </div>
-        <div className="favorites__places">
-          <PlaceCardMini />
-          <PlaceCardMini />
-        </div>
-      </li>
-
-      <li className="favorites__locations-items">
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <Link className="locations__item-link" to="#">
-              <span>Cologne</span>
-            </Link>
-          </div>
-        </div>
-        <div className="favorites__places">
-          <PlaceCardMini />
-        </div>
-      </li> */}
     </ul>
   );
 }

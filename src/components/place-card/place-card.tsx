@@ -4,7 +4,7 @@ import { Link, generatePath } from 'react-router-dom';
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
-  const ratingWidth = rating ? `${Math.round((rating / 5) * 100)}%` : '0%';
+  const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
 
   return (
     <article className="cities__card place-card" onMouseEnter={onMouseEnter}>

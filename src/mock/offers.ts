@@ -43,7 +43,7 @@ export const Offers: IOffer[] = [
       longitude: 4.673877537499948,
       zoom: 8,
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
     previewImage: 'https://15.design.htmlacademy.pro/static/hotel/20.jpg',
