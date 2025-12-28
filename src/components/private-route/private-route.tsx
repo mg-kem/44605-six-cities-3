@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/const';
-import { PrivateRouteProps } from '../../types.props';
+import { IPrivateRouteProps } from '../../types.props';
 
-export default function PrivateRoute({ children, authorizationStatus, login }: PrivateRouteProps) {
+export default function PrivateRoute({ children, authorizationStatus, login }: IPrivateRouteProps) {
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   if (login) {

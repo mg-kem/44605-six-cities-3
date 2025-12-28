@@ -17,4 +17,4 @@ export enum AuthorizationStatus {
 }
 
 /** Временная функция для получения статуса авторизации */
-export const authorizationStatus = () => AuthorizationStatus.NoAuth;
+export const authorizationStatus = () => AuthorizationStatus.Auth;

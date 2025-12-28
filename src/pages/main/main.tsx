@@ -1,14 +1,15 @@
 
 import SearchOffers from './components/search-offers/search-offers';
 import { Helmet } from 'react-helmet-async';
+import { IMainProps } from '../../types.props';
 
-export default function Main(): JSX.Element {
+export default function Main({ offers }: IMainProps): JSX.Element {
   return (
     <>
       <Helmet>
         <title> Главная </title>
       </Helmet>
-      <SearchOffers />
+      <SearchOffers offers={offers} />
     </>
   );
 }

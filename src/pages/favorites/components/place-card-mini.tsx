@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
+import { AppRoute } from '../../../const/const';
+import { IPlaceCardMiniProps } from '../../../types.props';
 
-export default function PlaceCardMini(): JSX.Element {
+export default function PlaceCardMini({ offer }: IPlaceCardMiniProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to="#">
-          <img className="place-card__image" src="img/apartment-small-04.jpg" width="150" height="110" alt="Place image" />
+        <Link to={generatePath(AppRoute.offer, { id: String(offer.id) })}>
+          <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">

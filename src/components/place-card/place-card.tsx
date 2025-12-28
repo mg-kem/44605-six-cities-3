@@ -1,20 +1,21 @@
-import { Offer } from '../../types';
-import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const/const';
+import { IPlaceCardProps } from '../../types.props';
+import { Link, generatePath } from 'react-router-dom';
 
-export default function PlaceCard({ offer }: { offer: Offer }): JSX.Element {
-  const { price, img, title, type, rating, isFavorite, premium } = offer;
+export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
+  const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
   const ratingWidth = rating ? `${Math.round((rating / 5) * 100)}%` : '0%';
 
   return (
-    <article className="cities__card place-card">
-      {premium && (
+    <article className="cities__card place-card" onMouseEnter={onMouseEnter}>
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper" >
-        <Link to="#">
-          <img className="place-card__image" src={img} width="260" height="200" alt="Place image" />
+        <Link to={generatePath(AppRoute.offer, { id: String(id) })}>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div >
       <div className="place-card__info">
