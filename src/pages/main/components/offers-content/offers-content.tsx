@@ -2,11 +2,11 @@ import Map from '../map/map';
 import PlaceCard from '../../../../components/place-card/place-card';
 import SearchInfo from '../search-info/search-info';
 import SortingForm from '../sorting-form/sorting-form';
-import { IOfferProps } from '../../../../types.props';
+import { IOffersContentProps } from '../../../../types.props';
 import { useState } from 'react';
 
 
-export default function OffersContent({ offers }: IOfferProps): JSX.Element {
+export default function OffersContent({ offers }: IOffersContentProps): JSX.Element {
   const [activeOffer, setActiveOffer] = useState<number | null>(null);
   void activeOffer; // Временная мера, чтобы не ругался Eslint.
 

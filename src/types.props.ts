@@ -22,6 +22,7 @@ interface IProps<T = IOffer[]> {
 
 /** Алиасы универсального интерфейса */
 export type IMainProps = IProps;
+export type IOffersContentProps = IProps;
 export type ISearchOffersProps = IProps;
 export type IFavoritesProps = IProps;
 export type IFavoritesListProps = IProps;
