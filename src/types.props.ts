@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from './const/const';
 import { IOffer } from './mock/offers';
+import { City } from './mock/cities';
 
 /** Интерфейс для пропс пустой страницы */
 export interface IEmptyProps {
@@ -21,15 +22,23 @@ interface IProps<T = IOffer[]> {
 }
 
 /** Алиасы универсального интерфейса */
-export type IMainProps = IProps;
 export type IOffersContentProps = IProps;
-export type ISearchOffersProps = IProps;
 export type IFavoritesProps = IProps;
 export type IFavoritesListProps = IProps;
+export interface ICitiesNavigationProps {
+  cities: City[];
+}
 export type IOfferProps = IProps & {
   isAuth: boolean;
 };
+export type ISearchOffersProps = IProps & {
+  cities: City[];
+};
+export type IMainProps = IProps & {
+  cities: City[];
+};
 export type IAppProps = IProps & {
+  cities: City[];
   authorizationStatus: AuthorizationStatus;
 };
 export type IMapProps = IProps & {

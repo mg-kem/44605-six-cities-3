@@ -11,14 +11,14 @@ import { AppRoute, AuthorizationStatus } from '../const/const';
 import { HelmetProvider } from 'react-helmet-async';
 import { IAppProps } from '../types.props';
 
-export default function App({ offers, authorizationStatus }: IAppProps): JSX.Element {
+export default function App({ offers, cities, authorizationStatus }: IAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
           <Route path={AppRoute.root} element={<Layout />}>
-            <Route index element={<Main offers={offers} />} />
+            <Route index element={<Main offers={offers} cities={cities} />} />
             <Route path={AppRoute.offer} element={<Offer offers={offers} isAuth={authorizationStatus === AuthorizationStatus.Auth} />} />
             <Route path={AppRoute.login}
               element={

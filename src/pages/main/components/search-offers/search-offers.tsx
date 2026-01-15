@@ -4,11 +4,11 @@ import PlacesEmpty from '../places-empty/places-empty';
 import { ISearchOffersProps } from '../../../../types.props';
 
 
-export default function SearchOffers({ offers }: ISearchOffersProps): JSX.Element {
+export default function SearchOffers({ offers, cities }: ISearchOffersProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
-      < CitiesNavigation />
+      < CitiesNavigation cities={cities} />
       <div className="cities">
         {offers.length > 0 ? <OffersContent offers={offers} /> : <PlacesEmpty />}
       </div >
