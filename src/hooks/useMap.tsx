@@ -1,35 +1,31 @@
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
-import { Map, TileLayer } from 'leaflet';
-import { Cities } from '../mock/cities';
+import leaflet from 'leaflet';
+import { City } from '../mock/cities';
 
-export default function useMap(mapRef: MutableRefObject<HTMLElement | null>): Map | null {
-  const [map, setMap] = useState<Map | null>(null);
-  const isRenderedRef = useRef<boolean>(false);
+export default function useMap(
+  mapRef: MutableRefObject<HTMLElement | null>,
+  city: City | undefined
+): leaflet.Map | null {
+
+  const [map, setMap] = useState<leaflet.Map | null>(null);
+  const isRenderMap = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
-      const instance = new Map(mapRef.current, {
-        center: {
-          lat: Cities[0].lat,
-          lng: Cities[0].lng,
-        },
-        zoom: Cities[0].zoom
-      });
+    if (mapRef.current && !isRenderMap.current) {
+      const instanceMap = leaflet
+        .map(mapRef.current)
+        .setView([city?.lat || 0, city?.lng || 0], city?.zoom || 0);
+      const layer = leaflet
+        .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        });
 
-      const layer = new TileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        }
-      );
-
-      instance.addLayer(layer);
-
-      setMap(instance);
-      isRenderedRef.current = true;
+      instanceMap.addLayer(layer);
+      setMap(instanceMap);
+      isRenderMap.current = true;
     }
-  }, [mapRef]);
+  }, [mapRef, city]);
 
   return map;
 }

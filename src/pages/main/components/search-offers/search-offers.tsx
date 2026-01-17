@@ -10,7 +10,7 @@ export default function SearchOffers({ offers, cities }: ISearchOffersProps): JS
       <h1 className="visually-hidden">Cities</h1>
       < CitiesNavigation cities={cities} />
       <div className="cities">
-        {offers.length > 0 ? <OffersContent offers={offers} /> : <PlacesEmpty />}
+        {offers.length > 0 ? <OffersContent offers={offers} cities={cities} /> : <PlacesEmpty />}
       </div >
     </main >
   );

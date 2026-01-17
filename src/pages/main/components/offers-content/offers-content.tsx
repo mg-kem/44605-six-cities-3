@@ -2,12 +2,18 @@ import Map from '../map/map';
 import PlaceCard from '../../../../components/place-card/place-card';
 import SearchInfo from '../search-info/search-info';
 import SortingForm from '../sorting-form/sorting-form';
-import { IOffersContentProps } from '../../../../types.props';
 import { useState } from 'react';
 import { IOffer } from '../../../../mock/offers';
+import { City } from '../../../../mock/cities';
 
 
-export default function OffersContent({ offers }: IOffersContentProps): JSX.Element {
+type OfferContentProps = {
+  offers: IOffer[];
+  cities: City[];
+}
+
+
+export default function OffersContent({ offers, cities }: OfferContentProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
 
   /** При наведении на offer обновляется state компонента */
@@ -26,7 +32,7 @@ export default function OffersContent({ offers }: IOffersContentProps): JSX.Elem
         </div>
       </section>
       <div className="cities__right-section">
-        <Map selectedOffer={selectedOffer} offers={offers} />
+        <Map selectedOffer={selectedOffer} offers={offers} cities={cities} />
       </div>
     </div>
   );
