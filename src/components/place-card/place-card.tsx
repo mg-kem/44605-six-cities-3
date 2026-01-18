@@ -1,11 +1,18 @@
-import { AppRoute } from '../../const/const';
-import { IPlaceCardProps } from '../../types.props';
+// Подключение вспомогательных файлов
 import { Link, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const/const';
+
+// Подключение типизации
+import { IPlaceCardProps } from '../../types/types.props';
+
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
+
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
+
   const offerPath = generatePath(AppRoute.offer, { id: String(id) });
+
 
   return (
     <article className="cities__card place-card" onMouseEnter={onMouseEnter}>

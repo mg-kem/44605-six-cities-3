@@ -1,27 +1,4 @@
-/** Интерфейс для объекта-карточки локации */
-export interface IOffer {
-  id: number;
-  title: string;
-  type: string;
-  price: number;
-  city: cities;
-  location: location;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-  previewImage: string;
-}
-
-interface cities {
-  'name': string;
-  'location': location;
-}
-
-interface location {
-  'latitude': number;
-  'longitude': number;
-  'zoom': number;
-}
+import { IOffer } from '../types/types';
 
 /** Массив объектов с данными по предложениям аренды */
 export const Offers: IOffer[] = [
