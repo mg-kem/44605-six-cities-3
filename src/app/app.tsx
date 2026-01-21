@@ -1,41 +1,58 @@
+// Подключение вспомогательных файлов
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+
+// Подключение компонентов
+import MainPage from '../pages/main-page/main-page';
+import LoginPage from '../pages/login-page/login-page';
+import OfferPage from '../pages/offer-page/offer-page';
+import FavoritesPage from '../pages/favorites-page/favorites-page';
+import ErrorPage from '../pages/error-page/error-page';
 import Layout from '../components/layout/layout';
-import Main from '../pages/main/main';
-import Login from '../pages/login/login';
-import Offer from '../pages/offer/offer';
-import Favorites from '../pages/favorites/favorites';
-import Error from '../pages/error/error';
 import PrivateRoute from '../components/private-route/private-route';
 import ScrollToTop from '../components/scroll-to-top/scroll-to-top';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const/const';
-import { HelmetProvider } from 'react-helmet-async';
-import { IAppProps } from '../types.props';
+import { AppRoute } from '../const/const';
 
-export default function App({ offers, authorizationStatus }: IAppProps): JSX.Element {
+// Подключение типизации
+import { IAppProps } from '../types/types.props';
+
+
+export default function App({ offers, cities, isAuth }: IAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
           <Route path={AppRoute.root} element={<Layout />}>
-            <Route index element={<Main offers={offers} />} />
-            <Route path={AppRoute.offer} element={<Offer offers={offers} isAuth={authorizationStatus === AuthorizationStatus.Auth} />} />
-            <Route path={AppRoute.login}
-              element={
-                <PrivateRoute authorizationStatus={authorizationStatus} login>
-                  <Login />
-                </PrivateRoute>
-              }
+            <Route index element={
+              <MainPage offers={offers} cities={cities} />
+            }
             />
-            <Route path={AppRoute.favorites}
-              element={
-                <PrivateRoute authorizationStatus={authorizationStatus}>
-                  <Favorites offers={offers} />
-                </PrivateRoute>
-              }
+
+            <Route path={AppRoute.offer} element={
+              <OfferPage offers={offers} cities={cities} isAuth={isAuth} />
+            }
+            />
+
+            <Route path={AppRoute.login} element={
+              <PrivateRoute isAuth={isAuth} login>
+                <LoginPage />
+              </PrivateRoute>
+            }
+            />
+
+            <Route path={AppRoute.favorites} element={
+              <PrivateRoute isAuth={isAuth}>
+                <FavoritesPage offers={offers} />
+              </PrivateRoute>
+            }
             />
           </Route>
-          <Route path='*' element={<Error />} />
+
+          <Route path='*' element={
+            <ErrorPage />
+          }
+          />
         </Routes>
       </BrowserRouter>
     </HelmetProvider >

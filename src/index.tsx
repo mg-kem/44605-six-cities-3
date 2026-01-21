@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app/app';
-import { Offers } from './mock/offers';
-import { authorizationStatus } from './const/const';
+import { Cities } from './const/cities'; // Массив городов(6)
+import { Offers } from './mock/offers'; // Моковый массив предложений
+import { isAuth } from './const/const'; // Вспомогательная функция для понимания, авторизован ли пользователь
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,6 +11,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={Offers} authorizationStatus={authorizationStatus()} />
+    <App offers={Offers} cities={Cities} isAuth={isAuth()} />
   </React.StrictMode>
 );
