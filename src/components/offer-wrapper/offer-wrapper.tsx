@@ -7,7 +7,7 @@ import { IOfferWrapperProps } from '../../types/types.props';
 
 const offersOption = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 
-export default function OfferWrapper({ isAuth, currentOffer }: IOfferWrapperProps): JSX.Element {
+export default function OfferWrapper({ isAuth, currentOffer, reviews }: IOfferWrapperProps): JSX.Element {
   let ratingWight: number = 0;
   if (currentOffer) {
     ratingWight = 100 / 5 * currentOffer?.rating;
@@ -74,7 +74,7 @@ export default function OfferWrapper({ isAuth, currentOffer }: IOfferWrapperProp
 
         <OwnerDescription />
 
-        <OfferReviews isAuth={isAuth} />
+        <OfferReviews isAuth={isAuth} reviews={reviews} />
 
       </div>
     </div >

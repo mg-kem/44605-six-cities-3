@@ -17,7 +17,7 @@ import { AppRoute } from '../const/const';
 import { IAppProps } from '../types/types.props';
 
 
-export default function App({ offers, cities, isAuth }: IAppProps): JSX.Element {
+export default function App({ offers, cities, reviews, isAuth }: IAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -30,7 +30,7 @@ export default function App({ offers, cities, isAuth }: IAppProps): JSX.Element 
             />
 
             <Route path={AppRoute.offer} element={
-              <OfferPage offers={offers} cities={cities} isAuth={isAuth} />
+              <OfferPage offers={offers} cities={cities} reviews={reviews} isAuth={isAuth} />
             }
             />
 
