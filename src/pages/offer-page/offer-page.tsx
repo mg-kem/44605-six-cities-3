@@ -41,7 +41,7 @@ const getCityById = (offers: IOffer[], cities: ICity[], id: string) => {
 };
 
 
-export default function OfferPage({ offers, cities, isAuth }: IOfferPageProps): JSX.Element {
+export default function OfferPage({ offers, cities, reviews, isAuth }: IOfferPageProps): JSX.Element {
   const { id } = useParams();
   const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
 
@@ -65,7 +65,7 @@ export default function OfferPage({ offers, cities, isAuth }: IOfferPageProps): 
 
           <OfferImages />
 
-          <OfferWrapper isAuth={isAuth} currentOffer={currentOffer as IOffer} />
+          <OfferWrapper isAuth={isAuth} currentOffer={currentOffer as IOffer} reviews={reviews} />
 
           <OfferMap selectedOffer={selectedOffer} randomOffers={randomOffers} presentedCity={presentedCity as ICity} />
 

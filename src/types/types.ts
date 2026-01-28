@@ -31,3 +31,11 @@ export interface ICity {
   zoom: number;
   selected: boolean;
 }
+
+export interface IReview {
+  id: number;
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}

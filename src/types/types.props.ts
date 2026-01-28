@@ -1,10 +1,11 @@
-import { IOffer, ICity } from './types';
+import { IOffer, ICity, IReview } from './types';
 
 
 // Типизация для pages
 export interface IAppProps {
   offers: IOffer[];
   cities: ICity[];
+  reviews: IReview[];
   isAuth: boolean;
 }
 
@@ -20,6 +21,7 @@ export interface IMainPageProps {
 export interface IOfferPageProps {
   offers: IOffer[];
   cities: ICity[];
+  reviews: IReview[];
   isAuth: boolean;
 }
 
@@ -81,8 +83,14 @@ export interface IPlaceCardMiniProps {
 export interface IOfferWrapperProps {
   isAuth: boolean;
   currentOffer?: IOffer;
+  reviews: IReview[];
 }
 
 export interface IOfferReviewsProps {
   isAuth: boolean;
+  reviews: IReview[];
+}
+
+export interface IReviewListProps {
+  reviews: IReview[];
 }
