@@ -5,7 +5,7 @@ import { useState } from 'react';
 import PlacesFound from '../places-found/places-found';
 import CitiesMap from '../cities-map/cities-map';
 import PlaceCard from '../place-card/place-card';
-import PlacesSoring from '../places-soring/places-soring';
+import PlacesSorting from '../places-soring/places-soring';
 
 // Подключение типизации
 import { IOffersContainerProps } from '../../types/types.props';
@@ -30,7 +30,7 @@ export default function OffersContainer({ offers, activeCity }: IOffersContainer
         <h2 className="visually-hidden">Places</h2>
 
         <PlacesFound filteredOffers={filteredOffers} />
-        <PlacesSoring />
+        <PlacesSorting />
 
         <div className="cities__places-list places__list tabs__content">
           {

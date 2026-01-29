@@ -1,4 +1,4 @@
-import ReviewList from '../review-list';
+import ReviewList from '../review-list/review-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 
 import { IOfferReviewsProps } from '../../types/types.props';

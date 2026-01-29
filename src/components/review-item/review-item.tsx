@@ -1,4 +1,4 @@
-import { IReviewItemProps } from '../types/types.props';
+import { IReviewItemProps } from '../../types/types.props';
 
 export default function ReviewItem({ review }: IReviewItemProps): JSX.Element {
   const ratingWidth = 100 / 5 * review.rating;

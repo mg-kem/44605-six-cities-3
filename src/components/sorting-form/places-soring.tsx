@@ -1,7 +1,7 @@
 // import { FormEvent } from 'react';
 import Sorting from '../sorting-option/sorting-option';
 
-export default function PlacesSoring(): JSX.Element {
+export default function PlacesSorting(): JSX.Element {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>

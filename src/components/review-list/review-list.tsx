@@ -1,5 +1,5 @@
-import { IReviewListProps } from '../types/types.props';
-import ReviewItem from './review-item';
+import { IReviewListProps } from '../../types/types.props';
+import ReviewItem from '../review-item/review-item';
 
 export default function ReviewList({ reviews }: IReviewListProps): JSX.Element {
   return (
