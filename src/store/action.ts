@@ -13,6 +13,10 @@ export const fillingOffersAction = createAction('fillingOffers', (offers: IOffer
   payload: offers,
 }));
 
+export const changeSortingAction = createAction('changeSorting', (sorting: 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first') => ({
+  payload: sorting,
+}));
+
 // Описание action
 // createAction - создает действие
 // 'changeCity' - название действия

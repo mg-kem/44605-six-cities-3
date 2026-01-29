@@ -25,22 +25,19 @@ export default function App({ offers, cities, reviews, isAuth }: IAppProps): JSX
         <Routes>
           <Route path={AppRoute.root} element={<Layout />}>
             <Route index element={
-              <MainPage offers={offers} cities={cities} />
+              <MainPage />
             }
             />
-
             <Route path={AppRoute.offer} element={
               <OfferPage offers={offers} cities={cities} reviews={reviews} isAuth={isAuth} />
             }
             />
-
             <Route path={AppRoute.login} element={
               <PrivateRoute isAuth={isAuth} login>
                 <LoginPage />
               </PrivateRoute>
             }
             />
-
             <Route path={AppRoute.favorites} element={
               <PrivateRoute isAuth={isAuth}>
                 <FavoritesPage offers={offers} />
@@ -48,7 +45,6 @@ export default function App({ offers, cities, reviews, isAuth }: IAppProps): JSX
             }
             />
           </Route>
-
           <Route path='*' element={
             <ErrorPage />
           }

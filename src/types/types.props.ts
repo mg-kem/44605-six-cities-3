@@ -13,10 +13,6 @@ export interface IFavoritePageProps {
   offers: IOffer[];
 }
 
-export interface IMainPageProps {
-  offers: IOffer[];
-  cities: ICity[];
-}
 
 export interface IOfferPageProps {
   offers: IOffer[];
@@ -28,7 +24,6 @@ export interface IOfferPageProps {
 
 // Типизация для components
 export interface ICityNavigationProps {
-  cities: ICity[];
   activeCity: ICity;
   onChangeCity: (city: ICity) => void;
 }
@@ -97,4 +92,8 @@ export interface IReviewListProps {
 
 export interface IReviewItemProps {
   review: IReview;
+}
+
+export interface ISortingProps {
+  handleSorting: (sorting: 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first') => void;
 }

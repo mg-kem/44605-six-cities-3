@@ -1,33 +1,38 @@
 // import { FormEvent } from 'react';
 import { useState } from 'react';
 import SortingOption from '../sorting-option/sorting-option';
+import { useEffect } from 'react';
+import { useAppSelector } from '../../hooks/useStore';
+import { ISortingProps } from '../../types/types.props';
 
-export default function PlacesSorting(): JSX.Element {
+export default function PlacesSorting({ handleSorting }: ISortingProps): JSX.Element {
+  const activeCity = useAppSelector((state) => state.city);
+  const sortingValue = useAppSelector((state) => state.sorting);
   const [showSortingOptions, setShowSortingOptions] = useState(false);
 
-  const handleSorting = () => {
+  const handleShowSorting = () => {
     setShowSortingOptions(!showSortingOptions);
   };
+
+  useEffect(() => {
+    setShowSortingOptions(false);
+  }, [activeCity, sortingValue]);
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
         role='button'
-        onClick={handleSorting}
+        onClick={handleShowSorting}
         className="places__sorting-type"
         tabIndex={0}
       >
-        Popular
+        {sortingValue}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      {
-        showSortingOptions && (
-          <SortingOption />
-        )
-      }
+      {showSortingOptions && (<SortingOption handleSorting={handleSorting} />)}
     </form >
   );
 }

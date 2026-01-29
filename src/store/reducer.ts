@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Offers } from '../mock/offers';
 import { Cities } from '../const/cities';
-import { changeCityAction, fillingOffersAction } from './action';
+import { changeCityAction, changeSortingAction, fillingOffersAction } from './action';
 
 // Определение начального состояния приложения
 const initialState = {
   city: Cities[0],
   offers: Offers,
+  sorting: 'Popular',
 };
 
 const reducer = createReducer(initialState,
@@ -19,6 +20,22 @@ const reducer = createReducer(initialState,
       .addCase(fillingOffersAction,
         (state, action) => {
           state.offers = action.payload;
+        })
+      .addCase(changeSortingAction,
+        (state, action) => {
+          state.sorting = action.payload;
+          state.offers = state.offers.sort((a, b) => {
+            switch (action.payload) {
+              case 'Popular':
+                return 0;
+              case 'Price: low to high':
+                return a.price - b.price;
+              case 'Price: high to low':
+                return b.price - a.price;
+              case 'Top rated first':
+                return b.rating - a.rating;
+            }
+          });
         });
   }
 );
