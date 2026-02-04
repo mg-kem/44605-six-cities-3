@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ICity, IOffer } from '../types/types';
+import { SortingType } from '../types/types';
 
 
 // Описание действий
@@ -13,7 +14,7 @@ export const fillingOffersAction = createAction('fillingOffers', (offers: IOffer
   payload: offers,
 }));
 
-export const changeSortingAction = createAction('changeSorting', (sorting: 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first') => ({
+export const changeSortingAction = createAction('changeSorting', (sorting: SortingType) => ({
   payload: sorting,
 }));
 

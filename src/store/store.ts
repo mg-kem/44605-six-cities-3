@@ -1,5 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
+import { createAPI } from '../services/api';
+
+export const api = createAPI();
+
+export const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) => {
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    });
+  }
+});
 
 // store -  это хранилище состояния приложения
 // configureStore - создает хранилище состояния приложения (упрощенный вариант)
@@ -16,7 +30,3 @@ import reducer from './reducer';
 // dispatch - метод, который отправляет действие в хранилище
 // subscribe - метод, который подписывается на изменения состояния приложения
 // replaceReducer - метод, который заменяет редюсер в хранилище
-
-export const store = configureStore({
-  reducer,
-});

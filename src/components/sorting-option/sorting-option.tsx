@@ -1,12 +1,23 @@
 import { ISortingProps } from '../../types/types.props';
+import { SortingType } from '../../types/types';
+import { useAppSelector } from '../../hooks/useStore';
+
+const sortingOptions = [
+  { label: 'Popular', value: 'Popular' },
+  { label: 'Price: low to high', value: 'Price: low to high' },
+  { label: 'Price: high to low', value: 'Price: high to low' },
+  { label: 'Top rated first', value: 'Top rated first' },
+];
 
 export default function SortingOption({ handleChangeSorting }: ISortingProps): JSX.Element {
+  const currentSorting = useAppSelector((state) => state.sorting);
   return (
-    <ul className="places__options places__options--custom places__options--opened">
-      <li className="places__option places__option--active" tabIndex={0} onClick={() => handleChangeSorting('Popular')}>Popular</li>
-      <li className="places__option" tabIndex={0} onClick={() => handleChangeSorting('Price: low to high')}>Price: low to high</li>
-      <li className="places__option" tabIndex={0} onClick={() => handleChangeSorting('Price: high to low')}>Price: high to low</li>
-      <li className="places__option" tabIndex={0} onClick={() => handleChangeSorting('Top rated first')}>Top rated first</li>
+    <ul className='places__options places__options--custom places__options--opened'>
+      {sortingOptions.map((option) => (
+        <li className={`places__option ${currentSorting === option.value ? 'places__option--active' : ''}`} key={option.value} tabIndex={0} onClick={() => handleChangeSorting(option.value as SortingType)}>
+          {option.label}
+        </li>
+      ))}
     </ul>
   );
 }
