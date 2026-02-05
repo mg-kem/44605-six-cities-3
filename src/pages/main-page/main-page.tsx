@@ -13,9 +13,8 @@ import { ICity } from '../../types/types';
 
 
 export default function MainPage(): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city); // Получаем активный город из состояния
+  const currentActiveCity = useAppSelector((state) => state.currentCity); // Получаем активный город из состояния
   const offers = useAppSelector((state) => state.offers); // Получаем список офферов из состояния
-
   const dispatch = useAppDispatch(); // Получаем функцию dispatch для отправки действий в хранилище
 
   const handleChangeCity = (newCity: ICity) => {
@@ -29,10 +28,10 @@ export default function MainPage(): JSX.Element {
       </Helmet>
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CityNavigation activeCity={activeCity} onChangeCity={handleChangeCity} />
+        <CityNavigation currentActiveCity={currentActiveCity} onChangeCity={handleChangeCity} />
         <div className="cities">
           {offers.length > 0
-            ? <OffersContainer offers={offers} activeCity={activeCity} />
+            ? <OffersContainer offers={offers} currentActiveCity={currentActiveCity} />
             : <PlacesEmpty />}
         </div >
       </main>

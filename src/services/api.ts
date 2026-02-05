@@ -1,8 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { getToken } from './token';
+import { BACKEND_URL, REQUEST_TIMEOUT } from '../const/const';
 
-const BACKEND_URL = 'https://15.design.htmlacademy.pro';
-const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -10,13 +9,17 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT,
   });
 
-  api.interceptors.request.use((config: AxiosRequestConfig) => {
-    const token = getToken();
+  // interceptor - перехватчик запросов. Нужен для того, чтобы добавлять токен в заголовок запроса.
+  api.interceptors.request.use(
+    (config) => {
+      const token = getToken();
 
-    if (token && config.headers) {
-      config.headers['x-token'] = token;
-    }
-  });
+      if (token && config.headers) {
+        config.headers['x-token'] = token;
+      }
+
+      return config;
+    });
 
   return api;
 };

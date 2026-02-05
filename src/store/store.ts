@@ -6,13 +6,12 @@ export const api = createAPI();
 
 export const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => {
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
         extraArgument: api,
       },
-    });
-  }
+    })
 });
 
 // store -  это хранилище состояния приложения

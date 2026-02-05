@@ -1,21 +1,40 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ICity, IOffer } from '../types/types';
+import { ICity, IOffer, IReview } from '../types/types';
 import { SortingType } from '../types/types';
+import { AuthorizationStatus } from '../const/const';
+
+const enum ActionType {
+  ChangeCity = 'changeCity',
+  ChangeSorting = 'changeSorting',
+  LoadingOffers = 'loadingOffers',
+  LoadingReviews = 'loadingReviews',
+  RequireAuthorization = 'requireAuthorization',
+}
 
 
 // Описание действий
 /** Действие для изменения города */
-export const changeCityAction = createAction('changeCity', (city: ICity) => ({
+export const changeCityAction = createAction(ActionType.ChangeCity, (city: ICity) => ({
   payload: city,
 }));
 
 /** Действие для заполнения списка предложений */
-export const fillingOffersAction = createAction('fillingOffers', (offers: IOffer[]) => ({
+export const loadingOffersAction = createAction(ActionType.LoadingOffers, (offers: IOffer[]) => ({
   payload: offers,
 }));
 
-export const changeSortingAction = createAction('changeSorting', (sorting: SortingType) => ({
+/** Действие для изменения типа сортировки */
+export const changeSortingAction = createAction(ActionType.ChangeSorting, (sorting: SortingType) => ({
   payload: sorting,
+}));
+
+/** Действие для изменения статуса авторизации */
+export const requireAuthorizationAction = createAction(ActionType.RequireAuthorization, (status: AuthorizationStatus) => ({
+  payload: status,
+}));
+
+export const loadingReviewsAction = createAction(ActionType.LoadingReviews, (reviews: IReview[]) => ({
+  payload: reviews,
 }));
 
 // Описание action

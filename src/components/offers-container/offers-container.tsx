@@ -29,12 +29,12 @@ const getSortedOffers = (offers: IOffer[], currentSorting: SortingType) => {
   return cases;
 };
 
-export default function OffersContainer({ offers, activeCity }: IOffersContainerProps): JSX.Element {
+export default function OffersContainer({ offers, currentActiveCity }: IOffersContainerProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
   const dispatch = useAppDispatch();
   const currentSorting = useAppSelector((state) => state.sorting);
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity.title); //Получаем список предложений по активному городу
-  const sortedOffers: IOffer[] = getSortedOffers(filteredOffers, currentSorting as SortingType);
+  const filteredOffers = offers.filter((offer) => offer.city.name === currentActiveCity.title); //Получаем список предложений по активному городу
+  const sortedOffers: IOffer[] = getSortedOffers(filteredOffers, currentSorting);
 
   const handleMouseEnter = (offer: IOffer) => {
     setSelectedOffer(offer);
@@ -57,7 +57,7 @@ export default function OffersContainer({ offers, activeCity }: IOffersContainer
         </div>
       </section>
       <div className="cities__right-section">
-        <CitiesMap selectedOffer={selectedOffer} offers={offers} activeCity={activeCity} />
+        <CitiesMap selectedOffer={selectedOffer} offers={offers} currentActiveCity={currentActiveCity} />
       </div>
     </div>
   );

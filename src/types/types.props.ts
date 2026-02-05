@@ -2,35 +2,32 @@ import { IOffer, ICity, IReview, SortingType } from './types';
 
 
 // Типизация для pages
-export interface IAppProps {
-  offers: IOffer[];
-  cities: ICity[];
-  reviews: IReview[];
-  isAuth: boolean;
-}
+// export interface IAppProps {
+//   offers: IOffer[];
+//   cities: ICity[];
+//   reviews: IReview[];
+//   isAuth: boolean;
+// }
 
-export interface IFavoritePageProps {
-  offers: IOffer[];
-}
+// export interface IFavoritePageProps {
+//   offers: IOffer[];
+// }
 
 
-export interface IOfferPageProps {
-  offers: IOffer[];
-  cities: ICity[];
-  reviews: IReview[];
-  isAuth: boolean;
-}
+// export interface IOfferPageProps {
+//   offers: IOffer[];
+// }
 
 
 // Типизация для components
 export interface ICityNavigationProps {
-  activeCity: ICity;
+  currentActiveCity: ICity;
   onChangeCity: (city: ICity) => void;
 }
 
 export interface IOffersContainerProps {
   offers: IOffer[];
-  activeCity: ICity;
+  currentActiveCity: ICity;
 }
 
 export interface IPlacesFoundProps {
@@ -45,7 +42,7 @@ export interface IPlaceCardProps {
 export interface ICitiesMapProps {
   offers: IOffer[];
   selectedOffer: IOffer | null;
-  activeCity: ICity;
+  currentActiveCity: ICity;
 }
 
 export interface IOfferMapProps {
@@ -76,15 +73,12 @@ export interface IPlaceCardMiniProps {
 }
 
 export interface IOfferWrapperProps {
-  isAuth: boolean;
   currentOffer?: IOffer;
-  reviews: IReview[];
 }
 
-export interface IOfferReviewsProps {
-  isAuth: boolean;
-  reviews: IReview[];
-}
+// export interface IOfferReviewsProps {
+//   isAuth: boolean;
+// }
 
 export interface IReviewListProps {
   reviews: IReview[];

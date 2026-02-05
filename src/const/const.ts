@@ -1,37 +1,32 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const BACKEND_URL = 'https://15.design.htmlacademy.pro';
+export const REQUEST_TIMEOUT = 5000;
 
 /** Маршрутизация страниц */
 export enum AppRoute {
-  root = '/',
-  login = '/login',
-  favorites = '/favorites',
-  offer = '/offer/:id'
+  ROOT = '/',
+  LOGIN = '/login',
+  FAVORITES = '/favorites',
+  OFFER = '/offer/:id'
+}
+
+/** Перечисление "ручек" путей для роутинга к серверу */
+export enum APIRoute {
+  OFFERS = '/offers',
+  LOGIN = '/login',
+  LOGOUT = '/logout',
 }
 
 /** Перечисление статусов авторизации */
 export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+  AUTH = 'AUTH',
+  NO_AUTH = 'NO_AUTH',
+  UNKNOWN = 'UNKNOWN'
 }
-
-const isAuthorized = () => AuthorizationStatus.Auth;
-
-/** Временная функция для получения статуса авторизации */
-export const isAuth = () => {
-  if (isAuthorized() !== AuthorizationStatus.Auth) {
-    return false;
-  }
-  return true;
-};
-
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
 export const defaultIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -44,3 +39,9 @@ export const customIcon = leaflet.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
+
+export const offersOption = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
+
+/** Временная функция для получения статуса авторизации */
+const isAuthorized = () => AuthorizationStatus.AUTH;
+export const isAuth = () => isAuthorized() === AuthorizationStatus.AUTH;

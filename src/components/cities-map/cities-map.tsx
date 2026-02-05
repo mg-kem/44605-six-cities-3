@@ -11,11 +11,11 @@ import { defaultIcon, customIcon } from '../../const/const';
 import { ICitiesMapProps } from '../../types/types.props';
 
 
-export default function CitiesMap({ offers, selectedOffer, activeCity }: ICitiesMapProps): JSX.Element {
+export default function CitiesMap({ offers, selectedOffer, currentActiveCity }: ICitiesMapProps): JSX.Element {
   /** Определяю контейнер по ссылке mapRef */
   const mapRef = useRef<HTMLElement | null>(null);
   /** Инициализирую экземляр карты с помощью кастом хука useMap */
-  const map = useMap(mapRef, activeCity);
+  const map = useMap(mapRef, currentActiveCity);
 
   useEffect(() => {
     if (map) {

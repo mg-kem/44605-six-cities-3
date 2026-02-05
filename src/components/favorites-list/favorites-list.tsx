@@ -32,7 +32,7 @@ export default function FavoritesList({ offers }: IFavoritesListProps): JSX.Elem
           <li className="favorites__locations-items" key={city}>
             <div className="favorites__locations locations locations--current">
               <div className="locations__item">
-                <Link className="locations__item-link" to={AppRoute.root}>
+                <Link className="locations__item-link" to={AppRoute.ROOT}>
                   <span role='button' onClick={() => changeActiveCity(getCity(city) as ICity)}>{city}</span>
                 </Link>
               </div>

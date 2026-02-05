@@ -14,7 +14,7 @@ export default function Layout(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link to={AppRoute.root} className={`header__logo-link ${linkClassName}`}>
+              <Link to={AppRoute.ROOT} className={`header__logo-link ${linkClassName}`}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -26,7 +26,7 @@ export default function Layout(): JSX.Element {
                   {isAuth() ?
                     <>
                       <li className="header__nav-item user">
-                        <Link to={AppRoute.favorites} className="header__nav-link header__nav-link--profile">
+                        <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
                           <div className="header__avatar-wrapper user__avatar-wrapper">
                           </div>
                           <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
@@ -41,7 +41,7 @@ export default function Layout(): JSX.Element {
                     </>
                     :
                     <li className="header__nav-item user">
-                      <Link to={AppRoute.login} className="header__nav-link header__nav-link--profile" >
+                      <Link to={AppRoute.LOGIN} className="header__nav-link header__nav-link--profile" >
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__login">Sign in</span>

@@ -11,7 +11,7 @@ export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX
 
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
 
-  const offerPath = generatePath(AppRoute.offer, { id: String(id) });
+  const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
 
 
   return (

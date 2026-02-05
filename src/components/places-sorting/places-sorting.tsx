@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/useStore';
 import { ISortingProps } from '../../types/types.props';
 
 export default function PlacesSorting({ handleChangeSorting }: ISortingProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector((state) => state.currentCity);
   const sortingValue = useAppSelector((state) => state.sorting);
   const [showSortingOptions, setShowSortingOptions] = useState(false);
 

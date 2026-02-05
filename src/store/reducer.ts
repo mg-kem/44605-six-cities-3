@@ -1,13 +1,26 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Offers } from '../mock/offers';
 import { Cities } from '../const/cities';
-import { changeCityAction, changeSortingAction, fillingOffersAction } from './action';
+import { changeCityAction, changeSortingAction, loadingOffersAction, requireAuthorizationAction, loadingReviewsAction } from './action';
+import { AuthorizationStatus } from '../const/const';
+import { IOffer } from '../types/types';
+import { ICity, SortingType, IReview } from '../types/types';
 
+
+type InitialState = {
+  currentCity: ICity;
+  offers: IOffer[];
+  sorting: SortingType;
+  isAuth: AuthorizationStatus;
+  reviews: IReview[];
+}
 // Определение начального состояния приложения
-const initialState = {
-  city: Cities[0],
+const initialState: InitialState = {
+  currentCity: Cities[0],
   offers: Offers,
   sorting: 'Popular',
+  isAuth: AuthorizationStatus.UNKNOWN,
+  reviews: [],
 };
 
 const reducer = createReducer(initialState,
@@ -15,18 +28,30 @@ const reducer = createReducer(initialState,
     builder
       .addCase(changeCityAction,
         (state, action) => {
-          state.city = action.payload;
+          state.currentCity = action.payload;
         })
-      .addCase(fillingOffersAction,
+      .addCase(loadingOffersAction,
         (state, action) => {
           state.offers = action.payload;
         })
       .addCase(changeSortingAction,
         (state, action) => {
           state.sorting = action.payload;
-        });
+        })
+      .addCase(requireAuthorizationAction,
+        (state, action) => {
+          state.isAuth = action.payload;
+        }
+      )
+      .addCase(loadingReviewsAction,
+        (state, action) => {
+          state.reviews = action.payload;
+        }
+      );
   }
 );
+
+export default reducer;
 
 // Описание редюсера
 // CreateReducer - создает редюсер
@@ -40,4 +65,3 @@ const reducer = createReducer(initialState,
 // return state; - возвращает новое состояние
 // За счет того, что redux toolkit использует immer, мы можем изменять состояние напрямую, без необходимости возвращать новое состояние
 
-export default reducer;

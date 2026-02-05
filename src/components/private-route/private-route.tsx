@@ -8,8 +8,8 @@ import { IPrivateRouteProps } from '../../types/types.props';
 
 export default function PrivateRoute({ children, isAuth, login }: IPrivateRouteProps) {
   if (login) {
-    return isAuth ? <Navigate to={AppRoute.root} /> : children;
+    return isAuth ? <Navigate to={AppRoute.ROOT} /> : children;
   }
-  return isAuth ? children : <Navigate to={AppRoute.login} />;
+  return isAuth ? children : <Navigate to={AppRoute.LOGIN} />;
 }
 
