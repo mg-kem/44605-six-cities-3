@@ -9,18 +9,13 @@ const enum ActionType {
   LoadingOffers = 'loadingOffers',
   LoadingReviews = 'loadingReviews',
   RequireAuthorization = 'requireAuthorization',
+  SetError = 'setError',
 }
-
 
 // Описание действий
 /** Действие для изменения города */
 export const changeCityAction = createAction(ActionType.ChangeCity, (city: ICity) => ({
   payload: city,
-}));
-
-/** Действие для заполнения списка предложений */
-export const loadingOffersAction = createAction(ActionType.LoadingOffers, (offers: IOffer[]) => ({
-  payload: offers,
 }));
 
 /** Действие для изменения типа сортировки */
@@ -33,11 +28,15 @@ export const requireAuthorizationAction = createAction(ActionType.RequireAuthori
   payload: status,
 }));
 
+/** Действие для заполнения списка предложений */
+export const loadingOffersAction = createAction(ActionType.LoadingOffers, (offers: IOffer[]) => ({
+  payload: offers,
+}));
+
 export const loadingReviewsAction = createAction(ActionType.LoadingReviews, (reviews: IReview[]) => ({
   payload: reviews,
 }));
 
-// Описание action
-// createAction - создает действие
-// 'changeCity' - название действия
-// (city: ICity) => ({ payload: city }) - функция, которая возвращает действие
+export const setErrorAction = createAction(ActionType.SetError, (error: string | null) => ({
+  payload: error,
+}));

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Offers } from '../mock/offers';
+// import { Offers } from '../mock/offers';
 import { Cities } from '../const/cities';
-import { changeCityAction, changeSortingAction, loadingOffersAction, requireAuthorizationAction, loadingReviewsAction } from './action';
+import { changeCityAction, changeSortingAction, loadingOffersAction, requireAuthorizationAction, loadingReviewsAction, setErrorAction } from './action';
 import { AuthorizationStatus } from '../const/const';
 import { IOffer } from '../types/types';
 import { ICity, SortingType, IReview } from '../types/types';
@@ -13,14 +13,16 @@ type InitialState = {
   sorting: SortingType;
   isAuth: AuthorizationStatus;
   reviews: IReview[];
+  error: string | null;
 }
-// Определение начального состояния приложения
+
 const initialState: InitialState = {
   currentCity: Cities[0],
-  offers: Offers,
+  offers: [],
   sorting: 'Popular',
   isAuth: AuthorizationStatus.UNKNOWN,
   reviews: [],
+  error: null,
 };
 
 const reducer = createReducer(initialState,
@@ -29,10 +31,6 @@ const reducer = createReducer(initialState,
       .addCase(changeCityAction,
         (state, action) => {
           state.currentCity = action.payload;
-        })
-      .addCase(loadingOffersAction,
-        (state, action) => {
-          state.offers = action.payload;
         })
       .addCase(changeSortingAction,
         (state, action) => {
@@ -43,9 +41,18 @@ const reducer = createReducer(initialState,
           state.isAuth = action.payload;
         }
       )
+      .addCase(loadingOffersAction,
+        (state, action) => {
+          state.offers = action.payload;
+        })
       .addCase(loadingReviewsAction,
         (state, action) => {
           state.reviews = action.payload;
+        }
+      )
+      .addCase(setErrorAction,
+        (state, action) => {
+          state.error = action.payload;
         }
       );
   }

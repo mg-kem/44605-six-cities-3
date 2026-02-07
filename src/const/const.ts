@@ -4,7 +4,9 @@ import 'leaflet/dist/leaflet.css';
 const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 export const BACKEND_URL = 'https://15.design.htmlacademy.pro';
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 export const REQUEST_TIMEOUT = 5000;
+export const TIMEOUT_SHOW_ERROR = 2000;
 
 /** Маршрутизация страниц */
 export enum AppRoute {
@@ -16,9 +18,9 @@ export enum AppRoute {
 
 /** Перечисление "ручек" путей для роутинга к серверу */
 export enum APIRoute {
-  OFFERS = '/offers',
-  LOGIN = '/login',
-  LOGOUT = '/logout',
+  OFFERS = '/six-cities/offers',
+  LOGIN = '/six-cities/login',
+  LOGOUT = '/six-cities/logout',
 }
 
 /** Перечисление статусов авторизации */

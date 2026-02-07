@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { getToken } from './token';
 import { BACKEND_URL, REQUEST_TIMEOUT } from '../const/const';
 
-
+/** Функция, которая возвращает экземпляр Axios - AxiosInstance*/
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,

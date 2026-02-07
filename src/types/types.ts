@@ -1,3 +1,5 @@
+import { store } from '../store/store';
+
 /** Интерфейс для объекта-карточки локации */
 export interface IOffer {
   id: number;
@@ -41,3 +43,20 @@ export interface IReview {
 }
 
 export type SortingType = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+
+export type Token = string;
+
+export type State = ReturnType<typeof store.getState>; // Тип для состояния приложения
+
+export type AppDispatch = typeof store.dispatch; // Тип для dispatch
+
+export type AuthData = {
+  email: string;
+  password: string;
+}
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+}
