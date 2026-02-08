@@ -1,13 +1,12 @@
 // Подключаем компоненты
 import OfferReviews from '../offer-reviews/offer-reviews';
 import OwnerDescription from '../owner-description/owner-description';
-
-// Подключаем типизацию
 import { IOfferWrapperProps } from '../../types/types.props';
+import { OFFERS_OPTION } from '../../const/const';
 
-const offersOption = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
 
-export default function OfferWrapper({ isAuth, currentOffer, reviews }: IOfferWrapperProps): JSX.Element {
+export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.Element {
+
   let ratingWight: number = 0;
   if (currentOffer) {
     ratingWight = 100 / 5 * currentOffer?.rating;
@@ -63,7 +62,7 @@ export default function OfferWrapper({ isAuth, currentOffer, reviews }: IOfferWr
           <h2 className="offer__inside-title">What&apos;s inside</h2>
           <ul className="offer__inside-list">
             {
-              offersOption.map((option) => (
+              OFFERS_OPTION.map((option) => (
                 <li className="offer__inside-item" key={option}>
                   {option}
                 </li>
@@ -74,7 +73,7 @@ export default function OfferWrapper({ isAuth, currentOffer, reviews }: IOfferWr
 
         <OwnerDescription />
 
-        <OfferReviews isAuth={isAuth} reviews={reviews} />
+        <OfferReviews />
 
       </div>
     </div >

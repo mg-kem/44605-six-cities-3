@@ -4,12 +4,10 @@ import { Helmet } from 'react-helmet-async';
 // Подключение компонентов
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesList from '../../components/favorites-list/favorites-list';
+import { useAppSelector } from '../../hooks/useStore';
 
-// Подключение типизации
-import { IFavoritePageProps } from '../../types/types.props';
-
-
-export default function FavoritesPage({ offers }: IFavoritePageProps): JSX.Element {
+export default function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const isFavoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -17,7 +15,6 @@ export default function FavoritesPage({ offers }: IFavoritePageProps): JSX.Eleme
       <Helmet>
         <title>Избранное</title>
       </Helmet>
-
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

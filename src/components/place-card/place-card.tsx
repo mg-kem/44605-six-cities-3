@@ -8,11 +8,8 @@ import { IPlaceCardProps } from '../../types/types.props';
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
-
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
-
-  const offerPath = generatePath(AppRoute.offer, { id: String(id) });
-
+  const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
 
   return (
     <article className="cities__card place-card" onMouseEnter={onMouseEnter}>

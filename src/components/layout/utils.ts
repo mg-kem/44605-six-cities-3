@@ -7,15 +7,15 @@ export function getLayoutState(pathName: AppRoute) {
   let shouldRenderFooter = false;
 
   switch (pathName) {
-    case (AppRoute.root):
+    case (AppRoute.ROOT):
       divClassName = 'page--gray page--main';
       linkClassName = 'header__logo-link--active';
       break;
-    case (AppRoute.login):
+    case (AppRoute.LOGIN):
       divClassName = 'page--gray page--login';
       shouldRenderUser = false;
       break;
-    case (AppRoute.favorites):
+    case (AppRoute.FAVORITES):
       shouldRenderFooter = true;
       break;
   }

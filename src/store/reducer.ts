@@ -1,13 +1,30 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { Offers } from '../mock/offers';
+// import { Offers } from '../mock/offers';
 import { Cities } from '../const/cities';
-import { changeCityAction, changeSortingAction, fillingOffersAction } from './action';
+import { changeCityAction, changeSortingAction, loadingOffersAction, requireAuthorizationAction, loadingReviewsAction, setErrorAction, setIsFetchingAction } from './actions';
+import { AuthorizationStatus } from '../const/const';
+import { IOffer } from '../types/types';
+import { ICity, SortingType, IReview } from '../types/types';
 
-// Определение начального состояния приложения
-const initialState = {
-  city: Cities[0],
-  offers: Offers,
+
+type InitialState = {
+  currentCity: ICity;
+  offers: IOffer[];
+  isFetching: boolean;
+  sorting: SortingType;
+  isAuth: AuthorizationStatus;
+  reviews: IReview[];
+  errorMessage: string | null;
+}
+
+const initialState: InitialState = {
+  currentCity: Cities[0],
+  offers: [],
+  isFetching: true,
   sorting: 'Popular',
+  isAuth: AuthorizationStatus.UNKNOWN,
+  reviews: [],
+  errorMessage: null,
 };
 
 const reducer = createReducer(initialState,
@@ -15,18 +32,40 @@ const reducer = createReducer(initialState,
     builder
       .addCase(changeCityAction,
         (state, action) => {
-          state.city = action.payload;
-        })
-      .addCase(fillingOffersAction,
-        (state, action) => {
-          state.offers = action.payload;
+          state.currentCity = action.payload;
         })
       .addCase(changeSortingAction,
         (state, action) => {
           state.sorting = action.payload;
-        });
+        })
+      .addCase(requireAuthorizationAction,
+        (state, action) => {
+          state.isAuth = action.payload;
+        }
+      )
+      .addCase(loadingOffersAction,
+        (state, action) => {
+          state.offers = action.payload;
+        })
+      .addCase(loadingReviewsAction,
+        (state, action) => {
+          state.reviews = action.payload;
+        }
+      )
+      .addCase(setErrorAction,
+        (state, action) => {
+          state.errorMessage = action.payload;
+        }
+      )
+      .addCase(setIsFetchingAction,
+        (state, action) => {
+          state.isFetching = action.payload;
+        }
+      );
   }
 );
+
+export default reducer;
 
 // Описание редюсера
 // CreateReducer - создает редюсер
@@ -40,4 +79,3 @@ const reducer = createReducer(initialState,
 // return state; - возвращает новое состояние
 // За счет того, что redux toolkit использует immer, мы можем изменять состояние напрямую, без необходимости возвращать новое состояние
 
-export default reducer;

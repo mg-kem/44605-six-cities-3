@@ -75,19 +75,19 @@ dispatch(fillingOffersAction(offers)); // отправить действие «
 
 `configureStore` создаёт **store** — объект с методами:
 
-- **`getState()`** — вернуть текущее состояние.
-- **`dispatch(action)`** — отправить действие; store вызовет редюсер и обновит state.
+- `**getState()**` — вернуть текущее состояние.
+- `**dispatch(action)**` — отправить действие; store вызовет редюсер и обновит state.
 
 В store передаётся наш редюсер из `reducer.ts`. Один store на всё приложение, он подключается в корне (например, в `index.tsx` через `Provider`).
 
 ---
 
-### 4. `state.ts` — типы для TypeScript
+### 4. `types.ts` — типы для TypeScript
 
 Отсюда экспортируются типы:
 
-- **`State`** — тип всего состояния (что лежит в store).
-- **`AppDispatch`** — тип функции `dispatch` нашего store.
+- `**State**` — тип всего состояния (что лежит в store).
+- `**AppDispatch**` — тип функции `dispatch` нашего store.
 
 Они нужны, чтобы в компонентах `useSelector` и `useDispatch` знали типы и не было ошибок.
 
@@ -128,14 +128,16 @@ const handleCityClick = (newCity: ICity) => {
 
 ## Краткая шпаргалка
 
-| Кто / что | Роль |
-|-----------|------|
-| **Action** | Объект «что сделать» (type + payload). Создаётся через `createAction`. |
-| **dispatch** | Метод store: `dispatch(action)`. Отправляет action в store. |
-| **Reducer** | Функция (state, action) → new state. Вызывается store, не компонентом. |
-| **Store** | Хранит state и вызывает редюсер при каждом dispatch. |
-| **useAppSelector** | Достать часть state в компоненте. |
-| **useAppDispatch** | Получить dispatch в компоненте, чтобы отправлять actions. |
+
+| Кто / что          | Роль                                                                   |
+| ------------------ | ---------------------------------------------------------------------- |
+| **Action**         | Объект «что сделать» (type + payload). Создаётся через `createAction`. |
+| **dispatch**       | Метод store: `dispatch(action)`. Отправляет action в store.            |
+| **Reducer**        | Функция (state, action) → new state. Вызывается store, не компонентом. |
+| **Store**          | Хранит state и вызывает редюсер при каждом dispatch.                   |
+| **useAppSelector** | Достать часть state в компоненте.                                      |
+| **useAppDispatch** | Получить dispatch в компоненте, чтобы отправлять actions.              |
+
 
 ---
 
@@ -147,3 +149,4 @@ const handleCityClick = (newCity: ICity) => {
 4. Store вызывает редюсер, редюсер в `addCase(changeCityAction, ...)` обновляет `state.city`.
 5. Store сохраняет новое состояние.
 6. Компоненты, где есть `useAppSelector((state) => state.city)`, получают новое значение и перерисовываются.
+

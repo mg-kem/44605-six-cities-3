@@ -7,11 +7,10 @@ import OfferImages from '../../components/offer-images/offer-images';
 import OfferWrapper from '../../components/offer-wrapper/offer-wrapper';
 import OfferMap from '../../components/offer-map/offer-map';
 import PlaceCard from '../../components/place-card/place-card';
-
-// Подключение типизации
-import { IOfferPageProps } from '../../types/types.props';
 import { ICity, IOffer } from '../../types/types';
 import { useParams } from 'react-router-dom';
+import { Cities } from '../../const/cities';
+import { useAppSelector } from '../../hooks/useStore';
 
 
 const getRandomOffers = (placements: IOffer[], count: number, city: ICity): IOffer[] => {
@@ -33,22 +32,20 @@ const getRandomOffers = (placements: IOffer[], count: number, city: ICity): IOff
 };
 
 
-const getCityById = (offers: IOffer[], cities: ICity[], id: string) => {
+const getCityById = (offers: IOffer[], id: string) => {
   const offerById = offers.find((offer) => String(offer.id) === id);
   const cityName = offerById?.city.name;
-  const cityById = cities.find((city) => city.title === cityName);
+  const cityById = Cities.find((city) => city.title === cityName);
   return [cityById, offerById];
 };
 
 
-export default function OfferPage({ offers, cities, reviews, isAuth }: IOfferPageProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
   const { id } = useParams();
   const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
-
-  const [presentedCity, currentOffer] = getCityById(offers, cities, id as string);
-
+  const [presentedCity, currentOffer] = getCityById(offers, id as string);
   const randomOffers = useMemo(() => getRandomOffers(offers, 3, presentedCity as ICity), [offers, presentedCity]);
-
   const handleSelectOffer = (offer: IOffer) => {
     setSelectedOffer(offer);
   };
@@ -59,16 +56,11 @@ export default function OfferPage({ offers, cities, reviews, isAuth }: IOfferPag
       <Helmet>
         <title>Предложения</title>
       </Helmet>
-
       <main className="page__main page__main--offer">
         <section className="offer">
-
           <OfferImages />
-
-          <OfferWrapper isAuth={isAuth} currentOffer={currentOffer as IOffer} reviews={reviews} />
-
+          <OfferWrapper currentOffer={currentOffer as IOffer} />
           <OfferMap selectedOffer={selectedOffer} randomOffers={randomOffers} presentedCity={presentedCity as ICity} />
-
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>

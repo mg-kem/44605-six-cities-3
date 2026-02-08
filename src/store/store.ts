@@ -1,22 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createAPI } from '../services/api';
 import reducer from './reducer';
 
-// store -  это хранилище состояния приложения
-// configureStore - создает хранилище состояния приложения (упрощенный вариант)
-// reducer - редюсер, который обрабатывает состояние приложения
-// action - действие, которое изменяет состояние приложения
-// return store - возвращает хранилище состояния приложения
-
-// Хранилище это объект, который содержит методы
-// getState - метод, который возвращает текущее состояние приложения
-// dispatch - метод, который отправляет действие в хранилище
-// subscribe - метод, который подписывается на изменения состояния приложения
-// replaceReducer - метод, который заменяет редюсер в хранилище
-// getState - метод, который возвращает текущее состояние приложения
-// dispatch - метод, который отправляет действие в хранилище
-// subscribe - метод, который подписывается на изменения состояния приложения
-// replaceReducer - метод, который заменяет редюсер в хранилище
+export const api = createAPI();
 
 export const store = configureStore({
   reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    })
 });

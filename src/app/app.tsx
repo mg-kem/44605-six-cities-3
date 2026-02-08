@@ -13,42 +13,31 @@ import PrivateRoute from '../components/private-route/private-route';
 import ScrollToTop from '../components/scroll-to-top/scroll-to-top';
 import { AppRoute } from '../const/const';
 
-// Подключение типизации
-import { IAppProps } from '../types/types.props';
 
+export default function App(): JSX.Element {
 
-export default function App({ offers, cities, reviews, isAuth }: IAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path={AppRoute.root} element={<Layout />}>
-            <Route index element={
-              <MainPage />
-            }
-            />
-            <Route path={AppRoute.offer} element={
-              <OfferPage offers={offers} cities={cities} reviews={reviews} isAuth={isAuth} />
-            }
-            />
-            <Route path={AppRoute.login} element={
-              <PrivateRoute isAuth={isAuth} login>
+          <Route path={AppRoute.ROOT} element={<Layout />}>
+            <Route index element={<MainPage />} />
+            <Route path={AppRoute.OFFER} element={<OfferPage />} />
+            <Route path={AppRoute.LOGIN} element={
+              <PrivateRoute isAuth login>
                 <LoginPage />
               </PrivateRoute>
             }
             />
-            <Route path={AppRoute.favorites} element={
-              <PrivateRoute isAuth={isAuth}>
-                <FavoritesPage offers={offers} />
+            <Route path={AppRoute.FAVORITES} element={
+              <PrivateRoute isAuth>
+                <FavoritesPage />
               </PrivateRoute>
             }
             />
           </Route>
-          <Route path='*' element={
-            <ErrorPage />
-          }
-          />
+          <Route path='*' element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider >

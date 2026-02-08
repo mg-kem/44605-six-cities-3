@@ -1,9 +1,10 @@
 import ReviewList from '../review-list/review-list';
 import ReviewsForm from '../reviews-form/reviews-form';
+import { useAppSelector } from '../../hooks/useStore';
 
-import { IOfferReviewsProps } from '../../types/types.props';
-
-export default function OfferReviews({ isAuth, reviews }: IOfferReviewsProps) {
+export default function OfferReviews() {
+  const reviews = useAppSelector((state) => state.reviews);
+  const isAuth = useAppSelector((state) => state.isAuth);
   const reviewsCount = reviews.length;
 
   return (

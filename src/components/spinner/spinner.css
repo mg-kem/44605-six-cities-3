@@ -1,0 +1,40 @@
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.spinner__ring {
+  width: 65px;
+  height: 65px;
+  border: 3px solid #f2f2f2;
+  border-top-color: #4481c3;
+  border-radius: 50%;
+  animation: spinner-rotate 1s linear infinite;
+}
+
+.spinner__text {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #979797;
+  letter-spacing: 0.02em;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -12,7 +12,7 @@ export default function PlaceCardMini({ offer }: IPlaceCardMiniProps): JSX.Eleme
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={generatePath(AppRoute.offer, { id: String(offer.id) })}>
+        <Link to={generatePath(AppRoute.OFFER, { id: String(offer.id) })}>
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
