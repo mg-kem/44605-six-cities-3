@@ -5,11 +5,10 @@ import { Helmet } from 'react-helmet-async';
 // Подключение компонентов
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferWrapper from '../../components/offer-wrapper/offer-wrapper';
-import OfferMap from '../../components/offer-map/offer-map';
-import PlaceCard from '../../components/place-card/place-card';
-import { ICity, IOffer } from '../../types/types';
+// import OfferMap from '../../components/offer-map/offer-map';
+// import PlaceCard from '../../components/place-card/place-card';
+import { IOffer } from '../../types/types';
 import { useParams } from 'react-router-dom';
-import { Cities } from '../../const/cities';
 import { fetchOfferIdActions } from '../../store/async-actions';
 import { useAppSelector } from '../../hooks/useStore';
 import { useAppDispatch } from '../../hooks/useStore';
@@ -43,7 +42,8 @@ import { useAppDispatch } from '../../hooks/useStore';
 
 
 export default function OfferPage(): JSX.Element {
-  // const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
+
   const currentOffer = useAppSelector((state) => state.currentOffer);
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -52,15 +52,13 @@ export default function OfferPage(): JSX.Element {
     if (id) {
       dispatch(fetchOfferIdActions({ id }));
     }
-
-  }, [id]);
-  // const offers = useAppSelector((state) => state.offers);
+  }, [dispatch, id]);
   // const [presentedCity, currentOffer] = getCityById(offers, id as string);
   // const randomOffers = useMemo(() => getRandomOffers(offers, 3, presentedCity as ICity), [offers, presentedCity]);
 
-  // const handleSelectOffer = (offer: IOffer) => {
-  //   setSelectedOffer(offer);
-  // };
+  const handleSelectOffer = (offer: IOffer) => {
+    setSelectedOffer(offer);
+  };
 
   return (
     <>
@@ -69,7 +67,7 @@ export default function OfferPage(): JSX.Element {
       </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferImages />
+          <OfferImages images={currentOffer?.images || []} />
           <OfferWrapper currentOffer={currentOffer as IOffer} />
           {/* <OfferMap selectedOffer={selectedOffer} randomOffers={randomOffers} presentedCity={presentedCity as ICity} /> */}
           <div className="container">

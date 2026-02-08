@@ -25,6 +25,10 @@ export interface ICityNavigationProps {
   onChangeCity: (city: ICity) => void;
 }
 
+export interface IOfferImagesProps {
+  images: string[];
+}
+
 export interface IOffersContainerProps {
   offers: IOffer[];
   currentActiveCity: ICity;

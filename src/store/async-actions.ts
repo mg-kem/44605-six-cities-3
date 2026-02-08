@@ -29,14 +29,11 @@ export const fetchOffersAction = createAsyncThunk<void, void, { dispatch: AppDis
 export const fetchOfferIdActions = createAsyncThunk<void, OfferID, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
   AsyncActionsType.FetchOfferId,
   async ({ id }, { dispatch, extra: api }) => {
-    dispatch(setIsFetchingAction(true));
     try {
-      const { data } = await api.get<IOffer>(APIRoute.OFFERS, { params: id });
-      dispatch(setIsFetchingAction(false));
+      const { data } = await api.get<IOffer>(`${APIRoute.OFFERS}/${id}`);
       dispatch(loadingCurrentOfferAction(data));
-    } catch {
-      dispatch(setIsFetchingAction(false));
-      toast.error('Что-то пошло не так');
+    } catch (error) {
+      toast.error(error as string);
     }
   }
 );
