@@ -38,7 +38,7 @@ export default function OfferPage(): JSX.Element {
         <section className="offer">
           <OfferImages images={currentOffer?.images || []} />
           <OfferWrapper currentOffer={currentOffer as IOffer} />
-          {<OfferMap currentCity={currentCity} currentOffer={currentOffer as IOffer} nearbyOffers={nearbyOffers} />}
+          {currentOffer && <OfferMap currentCity={currentCity} currentOffer={currentOffer} nearbyOffers={nearbyOffers} />}
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>

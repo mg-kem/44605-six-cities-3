@@ -43,9 +43,3 @@ export const customIcon = leaflet.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
-
-export const OFFERS_OPTION = ['Wi-Fi', 'Washing machine', 'Towels', 'Heating', 'Coffee machine', 'Baby seat', 'Kitchen', 'Dishwasher', 'Cabel TV', 'Fridge'];
-
-/** Временная функция для получения статуса авторизации */
-const isAuthorized = () => AuthorizationStatus.AUTH;
-export const isAuth = () => isAuthorized() === AuthorizationStatus.AUTH;
