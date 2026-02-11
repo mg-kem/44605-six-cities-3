@@ -2,15 +2,11 @@
 import OfferReviews from '../offer-reviews/offer-reviews';
 import OwnerDescription from '../owner-description/owner-description';
 import { IOfferWrapperProps } from '../../types/types.props';
-import { OFFERS_OPTION } from '../../const/const';
-
 
 export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.Element {
-
-  let ratingWight: number = 0;
-  if (currentOffer) {
-    ratingWight = 100 / 5 * currentOffer?.rating;
-  }
+  const goods = currentOffer?.goods || [];
+  const ratingWidth = (100 / 5) * (currentOffer?.rating || 0);
+  const hostData = currentOffer?.host || null;
 
   return (
     <div className="offer__container container">
@@ -35,7 +31,7 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
 
         <div className="offer__rating rating">
           <div className="offer__stars rating__stars">
-            <span style={{ width: `${ratingWight}%` }}></span>
+            <span style={{ width: `${ratingWidth}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
           <span className="offer__rating-value rating__value">{currentOffer?.rating}</span>
@@ -46,10 +42,10 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
             {currentOffer?.type}
           </li>
           <li className="offer__feature offer__feature--bedrooms">
-            3 Bedrooms
+            {currentOffer?.bedrooms} Bedrooms
           </li>
           <li className="offer__feature offer__feature--adults">
-            Max 4 adults
+            Max {currentOffer?.maxAdults} adults
           </li>
         </ul>
 
@@ -62,7 +58,7 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
           <h2 className="offer__inside-title">What&apos;s inside</h2>
           <ul className="offer__inside-list">
             {
-              OFFERS_OPTION.map((option) => (
+              goods.map((option) => (
                 <li className="offer__inside-item" key={option}>
                   {option}
                 </li>
@@ -71,7 +67,7 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
           </ul>
         </div>
 
-        <OwnerDescription />
+        <OwnerDescription hostData={hostData} />
 
         <OfferReviews />
 

@@ -1,4 +1,18 @@
-import { store } from '../store/store';
+import { AuthorizationStatus } from '../const/const';
+
+/** Интерфейс глобального состояния */
+export interface IInitialState {
+  currentCity: ICity;
+  currentOffer: IOffer | null;
+  nearbyOffers: IOffer[];
+  offers: IOffer[];
+  isFetching: boolean | null;
+  sorting: TSortingType;
+  isAuth: AuthorizationStatus;
+  reviews: IReview[] | null;
+  errorMessage: string | null;
+  userData: UserData | null;
+}
 
 /** Интерфейс для объекта-карточки локации */
 export interface IOffer {
@@ -6,20 +20,32 @@ export interface IOffer {
   title: string;
   type: string;
   price: number;
-  city: cities;
-  location: location;
+  city: ICities;
+  location: ILocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
   previewImage: string;
+  description?: string;
+  images?: string[];
+  goods?: string[];
+  host?: IUserType;
+  bedrooms?: number;
+  maxAdults?: number;
 }
 
-interface cities {
+export interface IUserType {
+  isPro: boolean;
+  name: string;
+  avatarUrl: string;
+}
+
+interface ICities {
   'name': string;
-  'location': location;
+  'location': ILocation;
 }
 
-interface location {
+interface ILocation {
   'latitude': number;
   'longitude': number;
   'zoom': number;
@@ -36,27 +62,29 @@ export interface ICity {
 
 export interface IReview {
   id: number;
-  userName: string;
   rating: number;
-  comment: string;
   date: string;
+  comment: string;
+  user: IUserType;
 }
 
-export type SortingType = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+export type TSortingType = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
-export type Token = string;
+export type TToken = string;
 
-export type State = ReturnType<typeof store.getState>; // Тип для состояния приложения
-
-export type AppDispatch = typeof store.dispatch; // Тип для dispatch
-
-export type AuthData = {
+export type TAuthData = {
   email: string;
   password: string;
 }
 
+export type OfferID = {
+  id: string;
+}
+
 export type UserData = {
-  id: number;
   email: string;
   token: string;
+  name: string;
+  avatarUrl: string;
+  isPro: boolean;
 }

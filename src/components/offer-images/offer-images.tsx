@@ -1,17 +1,10 @@
-const IMAGES = [
-  'img/room.jpg',
-  'img/apartment-01.jpg',
-  'img/apartment-02.jpg',
-  'img/apartment-03.jpg',
-  'img/studio-01.jpg',
-  'img/studio-photos.jpg'
-] as const;
+import { IOfferImagesProps } from '../../types/types.props';
 
-export default function OfferImages(): JSX.Element {
+export default function OfferImages({ images }: IOfferImagesProps): JSX.Element {
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">
-        {IMAGES.map((src) => (
+        {images.map((src) => (
           <div className="offer__image-wrapper" key={src}>
             <img className="offer__image" src={src} alt="Photo studio" />
           </div>

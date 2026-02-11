@@ -86,8 +86,8 @@ dispatch(fillingOffersAction(offers)); // отправить действие «
 
 Отсюда экспортируются типы:
 
-- `**State**` — тип всего состояния (что лежит в store).
-- `**AppDispatch**` — тип функции `dispatch` нашего store.
+- `**TState**` — тип всего состояния (что лежит в store).
+- `**TAppDispatch**` — тип функции `dispatch` нашего store.
 
 Они нужны, чтобы в компонентах `useSelector` и `useDispatch` знали типы и не было ошибок.
 

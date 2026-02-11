@@ -28,7 +28,7 @@ export default function CitiesMap({ offers, selectedOffer, currentActiveCity }: 
           .marker([offer.location.latitude, offer.location.longitude]);
 
         marker.setIcon(
-          selectedOffer && selectedOffer.title === offer.title
+          selectedOffer && selectedOffer.id === offer.id
             ? customIcon
             : defaultIcon
         )

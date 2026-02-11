@@ -1,5 +1,5 @@
 // Подключение вспомогательных файлов
-import { useState, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 // Подключение компонентов
@@ -7,48 +7,33 @@ import OfferImages from '../../components/offer-images/offer-images';
 import OfferWrapper from '../../components/offer-wrapper/offer-wrapper';
 import OfferMap from '../../components/offer-map/offer-map';
 import PlaceCard from '../../components/place-card/place-card';
-import { ICity, IOffer } from '../../types/types';
+import { IOffer } from '../../types/types';
 import { useParams } from 'react-router-dom';
-import { Cities } from '../../const/cities';
+import { fetchNearbyOffersAction, fetchOfferIdAction, fetchReviewsAction } from '../../store/async-actions';
 import { useAppSelector } from '../../hooks/useStore';
-
-
-const getRandomOffers = (placements: IOffer[], count: number, city: ICity): IOffer[] => {
-  if (placements.length <= count) {
-    return [...placements];
-  }
-  const filteredOffers = placements.filter((offer) => offer.city.name === city.title);
-  const selectedIndices = new Set<number>();
-  const result: IOffer[] = [];
-
-  while (selectedIndices.size < count) {
-    const randomIndex = Math.floor(Math.random() * filteredOffers.length);
-    if (!selectedIndices.has(randomIndex)) {
-      selectedIndices.add(randomIndex);
-      result.push(filteredOffers[randomIndex]);
-    }
-  }
-  return result;
-};
-
-
-const getCityById = (offers: IOffer[], id: string) => {
-  const offerById = offers.find((offer) => String(offer.id) === id);
-  const cityName = offerById?.city.name;
-  const cityById = Cities.find((city) => city.title === cityName);
-  return [cityById, offerById];
-};
-
+import { useAppDispatch } from '../../hooks/useStore';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const/const';
 
 export default function OfferPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const currentOffer = useAppSelector((state) => state.currentOffer); // Получаю выбранный offer из state
+  const nearbyOffers = useAppSelector((state) => state.nearbyOffers); // Получаю список предложений неподалеку из state
+  const currentCity = useAppSelector((state) => state.currentCity); // Получаю активный город
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
-  const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
-  const [presentedCity, currentOffer] = getCityById(offers, id as string);
-  const randomOffers = useMemo(() => getRandomOffers(offers, 3, presentedCity as ICity), [offers, presentedCity]);
-  const handleSelectOffer = (offer: IOffer) => {
-    setSelectedOffer(offer);
-  };
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    dispatch(fetchOfferIdAction({ id }))
+      .unwrap()
+      .catch(() => navigate(AppRoute.NOT_FOUND)); // Запрашиваю с сервера данные по выбранному предложению
+    dispatch(fetchReviewsAction({ id })); // Запрашиваю отзывы по выбранному предложению
+    dispatch(fetchNearbyOffersAction({ id })); // Запрашиваю предложения неподалеку от выбранного предложения
+
+  }, [dispatch, navigate, id]);
 
 
   return (
@@ -58,16 +43,14 @@ export default function OfferPage(): JSX.Element {
       </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferImages />
+          <OfferImages images={currentOffer?.images || []} />
           <OfferWrapper currentOffer={currentOffer as IOffer} />
-          <OfferMap selectedOffer={selectedOffer} randomOffers={randomOffers} presentedCity={presentedCity as ICity} />
+          {currentOffer && <OfferMap currentCity={currentCity} currentOffer={currentOffer} nearbyOffers={nearbyOffers} />}
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {
-                  randomOffers.map((offer) => <PlaceCard key={offer.id} offer={offer} onMouseEnter={() => handleSelectOffer(offer)} />)
-                }
+                {nearbyOffers.slice(0, 3).map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
               </div>
             </section>
           </div>
