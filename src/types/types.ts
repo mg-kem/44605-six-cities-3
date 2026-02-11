@@ -1,13 +1,13 @@
-import { store } from '../store/store';
 import { AuthorizationStatus } from '../const/const';
 
-export type InitialState = {
+/** Интерфейс глобального состояния */
+export interface IInitialState {
   currentCity: ICity;
   currentOffer: IOffer | null;
   nearbyOffers: IOffer[];
   offers: IOffer[];
   isFetching: boolean | null;
-  sorting: SortingType;
+  sorting: TSortingType;
   isAuth: AuthorizationStatus;
   reviews: IReview[] | null;
   errorMessage: string | null;
@@ -20,8 +20,8 @@ export interface IOffer {
   title: string;
   type: string;
   price: number;
-  city: cities;
-  location: location;
+  city: ICities;
+  location: ILocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
@@ -29,24 +29,23 @@ export interface IOffer {
   description?: string;
   images?: string[];
   goods?: string[];
-  host?: userType;
+  host?: IUserType;
   bedrooms?: number;
   maxAdults?: number;
 }
 
-export interface userType {
+export interface IUserType {
   isPro: boolean;
   name: string;
   avatarUrl: string;
 }
 
-
-interface cities {
+interface ICities {
   'name': string;
-  'location': location;
+  'location': ILocation;
 }
 
-interface location {
+interface ILocation {
   'latitude': number;
   'longitude': number;
   'zoom': number;
@@ -66,18 +65,14 @@ export interface IReview {
   rating: number;
   date: string;
   comment: string;
-  user: userType;
+  user: IUserType;
 }
 
-export type SortingType = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
+export type TSortingType = 'Popular' | 'Price: low to high' | 'Price: high to low' | 'Top rated first';
 
-export type Token = string;
+export type TToken = string;
 
-export type State = ReturnType<typeof store.getState>; // Тип для состояния приложения
-
-export type AppDispatch = typeof store.dispatch; // Тип для dispatch
-
-export type AuthData = {
+export type TAuthData = {
   email: string;
   password: string;
 }
@@ -85,16 +80,6 @@ export type AuthData = {
 export type OfferID = {
   id: string;
 }
-
-// export type TReviewsObj = {
-//   id: string;
-//   review: TFeedBack;
-// }
-
-// type TFeedBack = {
-//   rating: number;
-//   review: string;
-// }
 
 export type UserData = {
   email: string;

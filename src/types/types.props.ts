@@ -1,17 +1,18 @@
-import { IOffer, ICity, IReview, SortingType, userType } from './types';
+import { IOffer, ICity, IReview, TSortingType, IUserType } from './types';
 
 export interface ICityNavigationProps {
-  currentActiveCity: ICity;
+  currentCity: ICity;
   onChangeCity: (city: ICity) => void;
 }
 
+// ?
 export interface IOfferImagesProps {
   images: string[];
 }
 
 export interface IOffersContainerProps {
   offers: IOffer[];
-  currentActiveCity: ICity;
+  currentCity: ICity;
 }
 
 export interface IPlacesFoundProps {
@@ -73,9 +74,9 @@ export interface IReviewItemProps {
 }
 
 export interface ISortingProps {
-  handleChangeSorting: (sorting: SortingType) => void;
+  handleChangeSorting: (sorting: TSortingType) => void;
 }
 
 export interface IOwnerDescriptionProps {
-  hostData: userType | null;
+  hostData: IUserType | null;
 }

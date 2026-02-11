@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AuthorizationStatus } from '../const/const';
-import { AppDispatch, IOffer, State, AuthData, UserData, OfferID, IReview } from '../types/types';
+import { IOffer, TAuthData, UserData, OfferID, IReview } from '../types/types';
+import { TAppDispatch, TState } from '../store/store';
 import { loadingOffersAction, requireAuthorizationAction, setIsFetchingAction, setUserDataAction, loadingCurrentOfferAction, loadingReviewsAction, loadingNearbyOffers } from './actions';
 import { AxiosInstance, isAxiosError } from 'axios';
 import { saveToken, dropToken } from '../services/token';
@@ -20,7 +21,7 @@ const enum AsyncActionsType {
 }
 
 /** Получить список предложений */
-export const fetchOffersAction = createAsyncThunk<void, void, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const fetchOffersAction = createAsyncThunk<void, void, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.FetchOffers,
   async (_arg, { dispatch, extra: api }) => {
     dispatch(setIsFetchingAction(true));
@@ -31,7 +32,7 @@ export const fetchOffersAction = createAsyncThunk<void, void, { dispatch: AppDis
 );
 
 /** Получить предложение */
-export const fetchOfferIdAction = createAsyncThunk<void, OfferID, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const fetchOfferIdAction = createAsyncThunk<void, OfferID, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.FetchOfferId,
   async ({ id }, { dispatch, extra: api }) => {
     try {
@@ -49,7 +50,7 @@ export const fetchOfferIdAction = createAsyncThunk<void, OfferID, { dispatch: Ap
 );
 
 /** Получить список предложений неподалёку  */
-export const fetchNearbyOffersAction = createAsyncThunk<void, OfferID, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const fetchNearbyOffersAction = createAsyncThunk<void, OfferID, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.FetchNearbyOffers,
   async ({ id }, { dispatch, extra: api }) => {
     try {
@@ -62,7 +63,7 @@ export const fetchNearbyOffersAction = createAsyncThunk<void, OfferID, { dispatc
 );
 
 /** Получить список комментариев */
-export const fetchReviewsAction = createAsyncThunk<void, OfferID, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const fetchReviewsAction = createAsyncThunk<void, OfferID, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.FetchReviewsByOffer,
   async ({ id }, { dispatch, extra: api }) => {
     try {
@@ -78,7 +79,7 @@ export const fetchReviewsAction = createAsyncThunk<void, OfferID, { dispatch: Ap
 );
 
 /** Отправить комментарий */
-export const sendReviewByOfferAction = createAsyncThunk<void, { id: string; review: { rating: number; review: string } }, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const sendReviewByOfferAction = createAsyncThunk<void, { id: string; review: { rating: number; review: string } }, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.SendReviewByOffer,
   async ({ id, review }, { dispatch, extra: api }) => {
     try {
@@ -93,7 +94,7 @@ export const sendReviewByOfferAction = createAsyncThunk<void, { id: string; revi
 );
 
 /** Проверить статус авторизации пользователя */
-export const checkAuthLoginAction = createAsyncThunk<void, void, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const checkAuthLoginAction = createAsyncThunk<void, void, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.CheckAuthLogin,
   async (_arg, { dispatch, extra: api }) => {
     try {
@@ -107,7 +108,7 @@ export const checkAuthLoginAction = createAsyncThunk<void, void, { dispatch: App
 );
 
 /** Авторизоваться на сервере */
-export const loginAction = createAsyncThunk<void, AuthData, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const loginAction = createAsyncThunk<void, TAuthData, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.Login,
   async ({ email, password }, { dispatch, extra: api }) => {
     dispatch(setIsFetchingAction(true));
@@ -129,14 +130,19 @@ export const loginAction = createAsyncThunk<void, AuthData, { dispatch: AppDispa
 );
 
 /** Завершить сеанс пользователя */
-export const logoutAction = createAsyncThunk<void, void, { dispatch: AppDispatch; state: State; extra: AxiosInstance }>(
+export const logoutAction = createAsyncThunk<void, void, { dispatch: TAppDispatch; state: TState; extra: AxiosInstance }>(
   AsyncActionsType.Logout,
   async (_arg, { dispatch, extra: api }) => {
     dispatch(setIsFetchingAction(true));
-    await api.delete(APIRoute.LOGOUT);
-    dropToken();
-    dispatch(requireAuthorizationAction(AuthorizationStatus.NO_AUTH));
-    dispatch(setUserDataAction(null));
-    dispatch(setIsFetchingAction(false));
+    try {
+      await api.delete(APIRoute.LOGOUT);
+      dropToken();
+      dispatch(requireAuthorizationAction(AuthorizationStatus.NO_AUTH));
+      dispatch(setUserDataAction(null));
+      dispatch(setIsFetchingAction(false));
+    } catch {
+      dispatch(setIsFetchingAction(false));
+      toast.error('Произошла ошибка');
+    }
   }
 );

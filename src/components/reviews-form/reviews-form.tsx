@@ -26,11 +26,12 @@ export default function ReviewsForm(): JSX.Element {
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    dispatch(sendReviewByOfferAction({ id: currentOfferId.toString(), review }));
-    setReview({
-      rating: 0,
-      review: ''
-    });
+    dispatch(sendReviewByOfferAction({ id: currentOfferId.toString(), review }))
+      .unwrap()
+      .then(() => setReview({
+        rating: 0,
+        review: ''
+      }));
   };
 
   return (

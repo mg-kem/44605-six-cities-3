@@ -1,5 +1,5 @@
 import { ISortingProps } from '../../types/types.props';
-import { SortingType } from '../../types/types';
+import { TSortingType } from '../../types/types';
 import { useAppSelector } from '../../hooks/useStore';
 
 const sortingOptions = [
@@ -14,7 +14,7 @@ export default function SortingOption({ handleChangeSorting }: ISortingProps): J
   return (
     <ul className='places__options places__options--custom places__options--opened'>
       {sortingOptions.map((option) => (
-        <li className={`places__option ${currentSorting === option.value ? 'places__option--active' : ''}`} key={option.value} tabIndex={0} onClick={() => handleChangeSorting(option.value as SortingType)}>
+        <li className={`places__option ${currentSorting === option.value ? 'places__option--active' : ''}`} key={option.value} tabIndex={0} onClick={() => handleChangeSorting(option.value as TSortingType)}>
           {option.label}
         </li>
       ))}

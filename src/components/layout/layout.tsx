@@ -4,24 +4,16 @@ import { getLayoutState } from './utils';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore';
 import { logoutAction } from '../../store/async-actions';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../spinner/spinner';
 
 export default function Layout(): JSX.Element {
-  const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.offers);
-  const isAuth = useAppSelector((state) => state.isAuth);
-  const isFetching = useAppSelector((state) => state.isFetching);
-  const userData = useAppSelector((state) => state.userData);
-  const favoritesOffers = offers.filter((offer) => offer.isFavorite);
-  const countFavoritesOffers = favoritesOffers.length;
+  const { pathname } = useLocation();
+  const globalState = useAppSelector((state) => state);
+  const { offers, isAuth, userData } = globalState;
+  const countFavoritesOffers = offers.filter((offer) => offer.isFavorite).length;
   const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { linkClassName, divClassName, shouldRenderUser, shouldRenderFooter } = getLayoutState(pathname as AppRoute);
-
-  if (isFetching) {
-    return <Spinner />;
-  }
 
   const handleLogout = () => {
     dispatch(logoutAction()).then(() => {
@@ -31,7 +23,6 @@ export default function Layout(): JSX.Element {
 
   return (
     <div className={`page ${divClassName}`}>
-
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -40,11 +31,9 @@ export default function Layout(): JSX.Element {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
-
             {shouldRenderUser ? (
               <nav className="header__nav">
                 <ul className="header__nav-list">
-
                   {isLoggedIn ?
                     <>
                       <li className="header__nav-item user">
@@ -69,17 +58,13 @@ export default function Layout(): JSX.Element {
                         <span className="header__login">Sign in</span>
                       </Link>
                     </li>}
-
                 </ul>
               </nav>
             ) : null}
-
           </div>
         </div>
       </header >
-
       <Outlet />
-
       {shouldRenderFooter ? (
         <footer className="footer container">
           <Link to='/' className="footer__logo-link" >
@@ -87,7 +72,6 @@ export default function Layout(): JSX.Element {
           </Link>
         </footer>
       ) : null}
-
     </div >
   );
 }

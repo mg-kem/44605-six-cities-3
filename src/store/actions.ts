@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { ICity, IOffer, IReview, UserData } from '../types/types';
-import { SortingType } from '../types/types';
+import { TSortingType } from '../types/types';
 import { AuthorizationStatus } from '../const/const';
 
 const enum ActionType {
@@ -25,7 +25,7 @@ export const changeCityAction = createAction(ActionType.ChangeCity, (city: ICity
 }));
 
 /** Изменить сортировку */
-export const changeSortingAction = createAction(ActionType.ChangeSorting, (sorting: SortingType) => ({
+export const changeSortingAction = createAction(ActionType.ChangeSorting, (sorting: TSortingType) => ({
   payload: sorting,
 }));
 

@@ -1,10 +1,10 @@
 import { changeCityAction, changeSortingAction, loadingOffersAction, requireAuthorizationAction, loadingReviewsAction, setIsFetchingAction, setUserDataAction, loadingCurrentOfferAction, loadingNearbyOffers } from './actions';
 import { createReducer } from '@reduxjs/toolkit';
-import { InitialState } from '../types/types';
+import { IInitialState } from '../types/types';
 import { Cities } from '../const/cities';
 import { AuthorizationStatus } from '../const/const';
 
-const initialState: InitialState = {
+const initialState: IInitialState = {
   currentCity: Cities[0],
   currentOffer: null,
   nearbyOffers: [],

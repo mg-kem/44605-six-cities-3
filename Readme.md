@@ -68,7 +68,7 @@
 ### Управление состоянием (Redux)
 
 - **Store** (`src/store/store.ts`): создаётся через `configureStore`, в него передаётся один общий `reducer`; в middleware передаётся `api` (экземпляр Axios из `services/api`) как `extraArgument` для будущих thunk.
-- **Типы** (`src/store/types.ts`): `State` — тип состояния из `store.getState()`, `AppDispatch` — тип `store.dispatch`.
+- **Типы** (`src/store/types.ts`): `TState` — тип состояния из `store.getState()`, `TAppDispatch` — тип `store.dispatch`.
 - **Действия** (`src/store/action.ts`):
   - `changeCityAction(city)` — смена выбранного города.
   - `fillingOffersAction(offers)` — подстановка списка предложений.
@@ -126,7 +126,7 @@
 
 - **`src/const/cities.ts`**: массив из шести городов с координатами и zoom для карты.
 - **`src/const/const.ts`**: `AppRoute`, `AuthorizationStatus`, `isAuth()`, URL маркеров Leaflet и настройки иконок для карты.
-- **`src/types/types.ts`**: интерфейсы `IOffer`, `ICity`, `IReview`, тип `SortingType`.
+- **`src/types/types.ts`**: интерфейсы `IOffer`, `ICity`, `IReview`, тип `TSortingType`.
 - **`src/types/types.props.ts`**: пропсы компонентов и страниц.
 
 ### Карты
