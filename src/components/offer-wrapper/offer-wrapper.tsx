@@ -1,15 +1,19 @@
-// Подключаем компоненты
 import OfferReviews from '../offer-reviews/offer-reviews';
 import OwnerDescription from '../owner-description/owner-description';
 import { IOfferWrapperProps } from '../../types/types.props';
 import { toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
 import { getReverseBooleanValue } from '../../utils/utils';
-import { useAppDispatch } from '../../hooks/useStore';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { fetchOfferByIdAsyncAction, fetchOffersAsyncAction } from '../../store/thunks/offers';
 import { toast } from 'react-toastify';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { useNavigate } from 'react-router-dom';
 
 export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { id, isFavorite } = currentOffer || {};
   const goods = currentOffer?.goods || [];
   const ratingWidth = (100 / 5) * (currentOffer?.rating || 0);
@@ -17,6 +21,10 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (!isLoggedIn) {
+      navigate(AppRoute.LOGIN);
+      return;
+    }
     dispatch(toggleFavoriteOfferAsyncAction({ id, isFavorite: getReverseBooleanValue(isFavorite) }))
       .unwrap()
       .then(() => {

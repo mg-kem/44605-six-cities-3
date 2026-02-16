@@ -1,21 +1,29 @@
 import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
 import { IPlaceCardProps } from '../../types/types.props';
 import { toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
-import { useAppDispatch } from '../../hooks/useStore';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { toast } from 'react-toastify';
 import { fetchOffersAsyncAction } from '../../store/thunks/offers';
 import { getReverseBooleanValue } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
   const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (!isLoggedIn) {
+      navigate(AppRoute.LOGIN);
+      return;
+    }
     dispatch(toggleFavoriteOfferAsyncAction({ id, isFavorite: getReverseBooleanValue(isFavorite) }))
       .unwrap()
       .then(() => {

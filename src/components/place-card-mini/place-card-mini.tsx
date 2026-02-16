@@ -1,8 +1,5 @@
-// Подключение вспомогательных файлов
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
-
-// Подключение типизации
 import { IPlaceCardMiniProps } from '../../types/types.props';
 import { fetchFavoriteOffersAsyncAction, toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
 import { getReverseBooleanValue } from '../../utils/utils';
@@ -12,6 +9,7 @@ import { fetchOffersAsyncAction } from '../../store/thunks/offers';
 
 export default function PlaceCardMini({ offer }: IPlaceCardMiniProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   const ratingWidth = offer.rating ? `${Math.round(100 / 5 * offer.rating)}%` : '0%';
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
