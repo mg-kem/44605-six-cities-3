@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../../const/const';
-import { IOffer } from '../../types/types';
+import { IOffer, IOfferId } from '../../types/types';
 import { AxiosInstance } from 'axios';
 
 export const fetchOffersAsyncAction = createAsyncThunk<
@@ -9,6 +9,26 @@ export const fetchOffersAsyncAction = createAsyncThunk<
   'offers/fetchOffers',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<IOffer[]>(APIRoute.OFFERS);
+    return data;
+  }
+);
+
+export const fetchOfferByIdAsyncAction = createAsyncThunk<
+  IOffer, IOfferId, { extra: AxiosInstance }
+>(
+  'offers/fetchOfferById',
+  async ({ id }, { extra: api }) => {
+    const { data } = await api.get<IOffer>(`${APIRoute.OFFERS}/${id}`);
+    return data;
+  }
+);
+
+export const fetchNearbyOffersAsyncAction = createAsyncThunk<
+  IOffer[], IOfferId, { extra: AxiosInstance }
+>(
+  'offers/fetchNearbyOffers',
+  async ({ id }, { extra: api }) => {
+    const { data } = await api.get<IOffer[]>(`${APIRoute.OFFERS}/${id}/nearby`);
     return data;
   }
 );

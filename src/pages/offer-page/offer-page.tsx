@@ -7,15 +7,17 @@ import OfferMap from '../../components/offer-map/offer-map';
 import PlaceCard from '../../components/place-card/place-card';
 import { IOffer } from '../../types/types';
 import { useParams } from 'react-router-dom';
-import { fetchNearbyOffersAction, fetchOfferIdAction, fetchReviewsAction } from '../../store/async-actions';
+import { fetchOfferByIdAsyncAction, fetchNearbyOffersAsyncAction } from '../../store/thunks/offers';
+import { fetchReviewsByIdAsyncAction } from '../../store/thunks/reviews';
 import { useAppSelector } from '../../hooks/useStore';
 import { useAppDispatch } from '../../hooks/useStore';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
 
 export default function OfferPage(): JSX.Element {
-  const globalState = useAppSelector((state) => state);
-  const { currentOffer, nearbyOffers, currentCity } = globalState;
+  const currentCity = useAppSelector((state) => state.appReducer.currentCity);
+  const currentOffer = useAppSelector((state) => state.offers.offerById);
+  const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -24,11 +26,11 @@ export default function OfferPage(): JSX.Element {
     if (!id) {
       return;
     }
-    dispatch(fetchOfferIdAction({ id }))
+    dispatch(fetchOfferByIdAsyncAction({ id }))
       .unwrap()
       .then(() => {
-        dispatch(fetchReviewsAction({ id }));
-        dispatch(fetchNearbyOffersAction({ id }));
+        dispatch(fetchReviewsByIdAsyncAction({ id }));
+        dispatch(fetchNearbyOffersAsyncAction({ id }));
       })
       .catch(() => navigate(AppRoute.NOT_FOUND));
   }, [dispatch, navigate, id]);

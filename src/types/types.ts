@@ -1,17 +1,8 @@
-import { AuthorizationStatus } from '../const/const';
-
 /** Интерфейс глобального состояния */
 export interface IInitialState {
   currentCity: ICity;
-  currentOffer: IOffer | null;
-  nearbyOffers: IOffer[];
-  offers: IOffer[];
-  isFetching: boolean | null;
   sorting: TSortingType;
-  isAuth: AuthorizationStatus;
   reviews: IReview[] | null;
-  errorMessage: string | null;
-  userData: IUserData | null;
 }
 
 /** Интерфейс для объекта-карточки локации */

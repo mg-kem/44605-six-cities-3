@@ -1,7 +1,8 @@
 import { Fragment, ReactEventHandler, useState } from 'react';
-import { sendReviewByOfferAction } from '../../store/async-actions';
+import { fetchReviewsByIdAsyncAction, sendReviewByOfferAsyncAction } from '../../store/thunks/reviews';
 import { useAppSelector } from '../../hooks/useStore';
 import { useAppDispatch } from '../../hooks/useStore';
+import { toast } from 'react-toastify';
 
 const rating = [
   { id: 5, title: 'perfect' },
@@ -12,7 +13,7 @@ const rating = [
 ];
 
 export default function ReviewsForm(): JSX.Element {
-  const currentOfferId = useAppSelector((state) => state.currentOffer)?.id ?? '';
+  const currentOfferId = useAppSelector((state) => state.offers.offerById)?.id ?? '';
   const dispatch = useAppDispatch();
   const [review, setReview] = useState({
     rating: 0,
@@ -26,12 +27,16 @@ export default function ReviewsForm(): JSX.Element {
 
   const handleSubmit: ReactEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    dispatch(sendReviewByOfferAction({ id: currentOfferId.toString(), review }))
+    dispatch(sendReviewByOfferAsyncAction({ id: currentOfferId.toString(), review }))
       .unwrap()
-      .then(() => setReview({
-        rating: 0,
-        review: ''
-      }));
+      .then(() => {
+        setReview({
+          rating: 0,
+          review: ''
+        });
+        dispatch(fetchReviewsByIdAsyncAction({ id: currentOfferId.toString() }));
+      })
+      .catch(() => toast.error('Ошибка отправки комментария'));
   };
 
   return (

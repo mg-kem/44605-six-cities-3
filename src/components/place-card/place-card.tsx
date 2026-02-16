@@ -1,15 +1,30 @@
-// Подключение вспомогательных файлов
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
-
-// Подключение типизации
 import { IPlaceCardProps } from '../../types/types.props';
+import { toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
+import { useAppDispatch } from '../../hooks/useStore';
+import { toast } from 'react-toastify';
+import { fetchOffersAsyncAction } from '../../store/thunks/offers';
+import { getReverseBooleanValue } from '../../utils/utils';
 
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
   const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
+
+  const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(toggleFavoriteOfferAsyncAction({ id, isFavorite: getReverseBooleanValue(isFavorite) }))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchOffersAsyncAction());
+      })
+      .catch(() => {
+        toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
+      });
+  };
 
   return (
     <article className="cities__card place-card" onMouseEnter={onMouseEnter}>
@@ -31,10 +46,7 @@ export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX
             <button
               className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
+              onClick={handleChangeFavoriteStatus}
             >
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>

@@ -9,7 +9,7 @@ import PlacesSorting from '../places-sorting/places-sorting';
 import { IOffersContainerProps } from '../../types/types.props';
 import { IOffer } from '../../types/types';
 import { TSortingType } from '../../types/types';
-import { getSortedOffers } from './utils';
+import { getSortedOffers } from '../../utils/utils';
 
 
 export default function OffersContainer({ offers, currentCity, currentSorting }: IOffersContainerProps): JSX.Element {

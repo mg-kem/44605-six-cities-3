@@ -1,14 +1,18 @@
-// Подключение вспомогательных файлов
 import { Helmet } from 'react-helmet-async';
-
-// Подключение компонентов
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import FavoritesList from '../../components/favorites-list/favorites-list';
-import { useAppSelector } from '../../hooks/useStore';
+import { useAppSelector, useAppDispatch } from '../../hooks/useStore';
+import { useEffect } from 'react';
+import { fetchFavoriteOffersAsyncAction } from '../../store/thunks/favorites';
+
 
 export default function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const isFavoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const dispatch = useAppDispatch();
+  const favoritesOffers = useAppSelector((state) => state.favoriteOffers.favoritesOffers);
+
+  useEffect(() => {
+    dispatch(fetchFavoriteOffersAsyncAction());
+  }, [dispatch]);
 
   return (
     <>
@@ -19,8 +23,8 @@ export default function FavoritesPage(): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            {isFavoriteOffers && (<FavoritesList offers={isFavoriteOffers} />)}
-            {!isFavoriteOffers && (<FavoritesEmpty />)}
+            {favoritesOffers && (<FavoritesList offers={favoritesOffers} />)}
+            {!favoritesOffers && (<FavoritesEmpty />)}
           </section>
         </div>
       </main>

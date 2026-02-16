@@ -14,10 +14,9 @@ import { AppRoute } from '../../const/const';
 
 
 export default function FavoritesList({ offers }: IFavoritesListProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const citiesOfFavoritesOffers = new Set(offers.map((offer) => offer.city.name));
   const cities = [...citiesOfFavoritesOffers];
-
-  const dispatch = useAppDispatch();
 
   const changeActiveCity = (city: ICity) => {
     dispatch(changeCityAction(city));

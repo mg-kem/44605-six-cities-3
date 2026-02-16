@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/const';
-import { getLayoutState } from './utils';
+import { getLayoutState } from '../../utils/utils';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore';
 import { logoutAsyncAction } from '../../store/thunks/user';
 import { useNavigate } from 'react-router-dom';
