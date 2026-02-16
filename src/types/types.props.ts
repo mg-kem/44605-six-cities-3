@@ -70,13 +70,8 @@ export interface IPlaceCardMiniProps {
 }
 
 export interface IOfferWrapperProps {
-  currentOffer?: IOffer;
-  reviewsByCurrentOffer?: IReview[];
+  currentOffer: IOffer | null;
 }
-
-// export interface IOfferReviewsProps {
-//   isAuth: boolean;
-// }
 
 export interface IReviewListProps {
   reviews: IReview[];

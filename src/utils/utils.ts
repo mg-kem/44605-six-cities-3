@@ -41,7 +41,7 @@ export const getLayoutState = (pathName: AppRoute) => {
   return { linkClassName, divClassName, shouldRenderUser, shouldRenderFooter };
 };
 
-export const getReverseBooleanValue = (favorite: boolean): number => {
+export const getReverseBooleanValue = (favorite: boolean | undefined): number => {
   if (favorite) {
     return 0;
   }

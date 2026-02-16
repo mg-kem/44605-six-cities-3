@@ -5,7 +5,7 @@ import { IOffer } from '../../types/types';
 
 
 interface IToggleFavoriteOfferPayload {
-  id: number;
+  id: number | undefined;
   isFavorite: number;
 }
 export const fetchFavoriteOffersAsyncAction = createAsyncThunk<
