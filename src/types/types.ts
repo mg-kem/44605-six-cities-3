@@ -2,7 +2,6 @@
 export interface IInitialState {
   currentCity: ICity;
   sorting: TSortingType;
-  reviews: IReview[] | null;
 }
 
 /** Интерфейс для объекта-карточки локации */

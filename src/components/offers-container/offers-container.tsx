@@ -1,7 +1,7 @@
 // Подключение вспомогательных файлов
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/useStore';
-import { changeSortingAction } from '../../store/actions';
+import { changeSortingAction } from '../../store/slices/appSlice';
 import PlacesFound from '../places-found/places-found';
 import CitiesMap from '../cities-map/cities-map';
 import PlaceCard from '../place-card/place-card';

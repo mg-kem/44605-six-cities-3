@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchOffersAsyncAction, fetchOfferByIdAsyncAction, fetchNearbyOffersAsyncAction } from '../thunks/offers';
 import { IOffer } from '../../types/types';
+import { toggleFavoriteOfferAsyncAction } from '../thunks/favorites';
 
 interface IOfferState {
   offers: IOffer[];
@@ -57,6 +58,10 @@ const offersSlice = createSlice({
         .addCase(fetchNearbyOffersAsyncAction.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.error.message ?? 'Нет данных';
+        })
+        .addCase(toggleFavoriteOfferAsyncAction.fulfilled, (state, action) => {
+          const updatedOffer = action.payload;
+          state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
         });
     }
 });

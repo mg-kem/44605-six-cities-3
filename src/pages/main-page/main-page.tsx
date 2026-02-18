@@ -1,12 +1,12 @@
-// Подключение вспомогательных файлов
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
-import { changeCityAction } from '../../store/actions';
+import { changeCityAction } from '../../store/slices/appSlice';
 import CityNavigation from '../../components/city-navigation/city-navigation';
 import OffersContainer from '../../components/offers-container/offers-container';
 import PlacesEmpty from '../../components/places-empty/places-empty';
 import Spinner from '../../components/spinner/spinner';
 import { ICity } from '../../types/types';
+import { useCallback } from 'react';
 
 
 export default function MainPage(): JSX.Element {
@@ -16,9 +16,11 @@ export default function MainPage(): JSX.Element {
   const oldState = useAppSelector((state) => state.appReducer);
   const { currentCity, sorting } = oldState;
 
-  const handleChangeCity = (newCity: ICity) => {
+  const handleChangeCity = useCallback((newCity: ICity) => {
     dispatch(changeCityAction(newCity));
-  };
+  }, [dispatch]);
+
+  const offersByCity = offers.filter((offer) => offer.city.name === currentCity.title);
 
 
   return (
@@ -26,7 +28,7 @@ export default function MainPage(): JSX.Element {
       <Helmet>
         <title> Главная </title>
       </Helmet>
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${offersByCity.length === 0 ? 'page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <CityNavigation currentCity={currentCity} onChangeCity={handleChangeCity} />
         <div className="cities">

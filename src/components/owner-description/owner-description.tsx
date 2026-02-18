@@ -13,7 +13,7 @@ export default function OwnerDescription({ hostData }: IOwnerDescriptionProps) {
           {hostData?.name}
         </span>
         <span className="offer__user-status">
-          {hostData?.isPro}
+          {hostData?.isPro ? 'Pro' : ''}
         </span>
       </div>
       <div className="offer__description">

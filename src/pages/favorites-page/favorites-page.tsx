@@ -22,9 +22,8 @@ export default function FavoritesPage(): JSX.Element {
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            {favoritesOffers && (<FavoritesList offers={favoritesOffers} />)}
-            {!favoritesOffers && (<FavoritesEmpty />)}
+            {favoritesOffers.length > 0 && (<FavoritesList offers={favoritesOffers} />)}
+            {favoritesOffers.length === 0 && (<FavoritesEmpty />)}
           </section>
         </div>
       </main>

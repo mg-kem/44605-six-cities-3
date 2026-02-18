@@ -4,7 +4,6 @@ import { IPlaceCardProps } from '../../types/types.props';
 import { toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { toast } from 'react-toastify';
-import { fetchOffersAsyncAction } from '../../store/thunks/offers';
 import { getReverseBooleanValue } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,9 +25,6 @@ export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX
     }
     dispatch(toggleFavoriteOfferAsyncAction({ id, isFavorite: getReverseBooleanValue(isFavorite) }))
       .unwrap()
-      .then(() => {
-        dispatch(fetchOffersAsyncAction());
-      })
       .catch(() => {
         toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
       });

@@ -8,19 +8,17 @@ interface IToggleFavoriteOfferPayload {
   id: number | undefined;
   isFavorite: number;
 }
-export const fetchFavoriteOffersAsyncAction = createAsyncThunk<
-  IOffer[], void, { extra: AxiosInstance }
->(
+
+export const fetchFavoriteOffersAsyncAction = createAsyncThunk<IOffer[], void, { extra: AxiosInstance }>(
   'favorites/fetchFavorites',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<IOffer[]>(APIRoute.FAVORITES);
     return data;
   });
 
-export const toggleFavoriteOfferAsyncAction = createAsyncThunk<
-  void, IToggleFavoriteOfferPayload, { extra: AxiosInstance }
->(
+export const toggleFavoriteOfferAsyncAction = createAsyncThunk<IOffer, IToggleFavoriteOfferPayload, { extra: AxiosInstance }>(
   'favorites/toggleFavoriteOffer',
   async ({ id, isFavorite }, { extra: api }) => {
-    await api.post(`${APIRoute.FAVORITES}/${id}/${isFavorite}`);
+    const { data } = await api.post<IOffer>(`${APIRoute.FAVORITES}/${id}/${isFavorite}`);
+    return data;
   });
