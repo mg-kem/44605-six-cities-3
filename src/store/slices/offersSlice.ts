@@ -62,6 +62,7 @@ const offersSlice = createSlice({
         .addCase(toggleFavoriteOfferAsyncAction.fulfilled, (state, action) => {
           const updatedOffer = action.payload;
           state.offers = state.offers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
+          state.nearbyOffers = state.nearbyOffers.map((offer) => offer.id === updatedOffer.id ? updatedOffer : offer);
         });
     }
 });

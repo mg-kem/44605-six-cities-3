@@ -8,6 +8,7 @@ import { fetchOfferByIdAsyncAction, fetchOffersAsyncAction } from '../../store/t
 import { toast } from 'react-toastify';
 import { AppRoute, AuthorizationStatus } from '../../const/const';
 import { useNavigate } from 'react-router-dom';
+import { getRatingWidth } from '../../utils/utils';
 
 
 export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.Element {
@@ -17,7 +18,7 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
   const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { id, isFavorite } = currentOffer || {};
   const goods = currentOffer?.goods || [];
-  const ratingWidth = Math.round((100 / 5) * (currentOffer?.rating || 0));
+  const ratingWidth = getRatingWidth(currentOffer?.rating || 0);
   const hostData = currentOffer?.host || null;
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,6 +37,8 @@ export default function OfferWrapper({ currentOffer }: IOfferWrapperProps): JSX.
         toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
       });
   };
+
+
   return (
     <div className="offer__container container">
       <div className="offer__wrapper">

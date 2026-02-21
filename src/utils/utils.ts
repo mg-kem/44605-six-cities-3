@@ -48,3 +48,4 @@ export const getReverseBooleanValue = (favorite: boolean | undefined): number =>
   return 1;
 };
 
+export const getRatingWidth = (rating: number): string => `${Math.round((100 / 5) * rating)}%`;

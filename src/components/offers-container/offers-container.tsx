@@ -32,7 +32,7 @@ export default function OffersContainer({ offers, currentCity, currentSorting }:
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <MemoizedPlacesFound countOffers={filteredOffers.length} cityName={filteredOffers[0].city.name} />
+        <MemoizedPlacesFound countOffers={filteredOffers.length} cityName={filteredOffers[0]?.city.name} />
         <MemoizedPlacesSorting currentCity={currentCity} currentSorting={currentSorting} handleChangeSorting={handleChangeSorting} />
         <div className="cities__places-list places__list tabs__content">
           {sortedOffers.map((offer) =>

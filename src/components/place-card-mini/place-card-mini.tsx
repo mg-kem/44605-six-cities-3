@@ -5,12 +5,13 @@ import { fetchFavoriteOffersAsyncAction, toggleFavoriteOfferAsyncAction } from '
 import { getReverseBooleanValue } from '../../utils/utils';
 import { useAppDispatch } from '../../hooks/useStore';
 import { fetchOffersAsyncAction } from '../../store/thunks/offers';
+import { getRatingWidth } from '../../utils/utils';
 
 
 export default function PlaceCardMini({ offer }: IPlaceCardMiniProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const ratingWidth = offer.rating ? `${Math.round(100 / 5 * offer.rating)}%` : '0%';
+  const ratingWidth = getRatingWidth(offer.rating);
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -53,7 +54,7 @@ export default function PlaceCardMini({ offer }: IPlaceCardMiniProps): JSX.Eleme
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to='#'>{offer.title}</Link>
+          <Link to={generatePath(AppRoute.OFFER, { id: String(offer.id) })}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

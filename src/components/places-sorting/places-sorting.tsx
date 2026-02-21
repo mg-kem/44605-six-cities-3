@@ -2,15 +2,15 @@ import { useState } from 'react';
 import SortingOption from '../sorting-option/sorting-option';
 import { useEffect } from 'react';
 import { ISortingProps } from '../../types/types.props';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 
 function PlacesSorting({ currentCity, currentSorting, handleChangeSorting }: ISortingProps): JSX.Element {
   const [showSortingOptions, setShowSortingOptions] = useState(false);
 
-  const handleShowSorting = () => {
+  const handleShowSorting = useCallback(() => {
     setShowSortingOptions(!showSortingOptions);
-  };
+  }, []);
 
   useEffect(() => {
     setShowSortingOptions(false);
