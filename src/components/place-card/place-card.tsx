@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { getReverseBooleanValue } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { memo } from 'react';
+import { getRatingWidth } from '../../utils/utils';
 
 
 function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
@@ -15,7 +16,7 @@ function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
   const isAuth = useAppSelector((state) => state.user.isAuth);
   const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
-  const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
+  const ratingWidth = getRatingWidth(rating);
   const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
 
   const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {

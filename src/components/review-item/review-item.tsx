@@ -1,8 +1,9 @@
 import { IReviewItemProps } from '../../types/types.props';
+import { getRatingWidth } from '../../utils/utils';
 
 
 export default function ReviewItem({ review }: IReviewItemProps): JSX.Element {
-  const ratingWidth = 100 / 5 * review.rating;
+  const ratingWidth = getRatingWidth(review.rating);
 
   return (
     <li className="reviews__item" key={review.id}>

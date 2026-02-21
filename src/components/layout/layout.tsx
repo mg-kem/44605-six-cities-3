@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/useStore';
 import { logoutAsyncAction } from '../../store/thunks/user';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 
 
 function Layout(): JSX.Element {
@@ -19,7 +19,7 @@ function Layout(): JSX.Element {
   const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { linkClassName, divClassName, shouldRenderUser, shouldRenderFooter } = getLayoutState(pathname as AppRoute);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     dispatch(logoutAsyncAction())
       .unwrap()
       .then(() => {
@@ -28,7 +28,7 @@ function Layout(): JSX.Element {
       .catch(() => {
         toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
       });
-  };
+  }, [dispatch, navigate]);
 
   return (
     <div className={`page ${divClassName}`}>
