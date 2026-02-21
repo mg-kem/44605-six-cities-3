@@ -3,36 +3,24 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/useMap';
-
-// Подключаем константы
 import { defaultIcon, customIcon } from '../../const/const';
-
-// Подключаем типизацию
 import { ICitiesMapProps } from '../../types/types.props';
 
 
-export default function CitiesMap({ offers, selectedOffer, currentActiveCity }: ICitiesMapProps): JSX.Element {
-  /** Определяю контейнер по ссылке mapRef */
+export default function CitiesMap({ offers, selectedOffer, currentCity }: ICitiesMapProps): JSX.Element {
   const mapRef = useRef<HTMLElement | null>(null);
-  /** Инициализирую экземпляр карты с помощью кастом хука useMap */
-  const map = useMap(mapRef, currentActiveCity);
+  const map = useMap(mapRef, currentCity);
 
   useEffect(() => {
     if (map) {
-      const markerLayer = leaflet
-        .layerGroup()
-        .addTo(map);
-
+      const markerLayer = leaflet.layerGroup().addTo(map);
       offers.forEach((offer) => {
-        const marker = leaflet
-          .marker([offer.location.latitude, offer.location.longitude]);
-
+        const marker = leaflet.marker([offer.location.latitude, offer.location.longitude]);
         marker.setIcon(
           selectedOffer && selectedOffer.id === offer.id
             ? customIcon
             : defaultIcon
-        )
-          .addTo(markerLayer);
+        ).addTo(markerLayer);
       });
 
       return () => {

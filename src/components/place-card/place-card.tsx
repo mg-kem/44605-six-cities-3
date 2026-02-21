@@ -1,15 +1,34 @@
-// Подключение вспомогательных файлов
 import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const/const';
-
-// Подключение типизации
+import { AppRoute, AuthorizationStatus } from '../../const/const';
 import { IPlaceCardProps } from '../../types/types.props';
+import { toggleFavoriteOfferAsyncAction } from '../../store/thunks/favorites';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
+import { toast } from 'react-toastify';
+import { getReverseBooleanValue } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX.Element {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { id, price, previewImage, title, type, rating, isFavorite, isPremium } = offer;
   const ratingWidth = rating ? `${Math.round((100 / 5) * rating)}%` : '0%';
   const offerPath = generatePath(AppRoute.OFFER, { id: String(id) });
+
+  const handleChangeFavoriteStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (!isLoggedIn) {
+      navigate(AppRoute.LOGIN);
+      return;
+    }
+    dispatch(toggleFavoriteOfferAsyncAction({ id, isFavorite: getReverseBooleanValue(isFavorite) }))
+      .unwrap()
+      .catch(() => {
+        toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
+      });
+  };
 
   return (
     <article className="cities__card place-card" onMouseEnter={onMouseEnter}>
@@ -31,10 +50,7 @@ export default function PlaceCard({ offer, onMouseEnter }: IPlaceCardProps): JSX
             <button
               className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
+              onClick={handleChangeFavoriteStatus}
             >
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>

@@ -1,9 +1,7 @@
 // Подключение вспомогательных файлов
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css'; // Уместно ли тут это подключение?
-
-// Подключение типизации
+import 'leaflet/dist/leaflet.css';
 import { ICity } from '../types/types';
 
 

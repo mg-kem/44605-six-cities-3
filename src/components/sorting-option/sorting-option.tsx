@@ -1,6 +1,5 @@
-import { ISortingProps } from '../../types/types.props';
+import { ISortingOptionsProps } from '../../types/types.props';
 import { TSortingType } from '../../types/types';
-import { useAppSelector } from '../../hooks/useStore';
 
 const sortingOptions = [
   { label: 'Popular', value: 'Popular' },
@@ -9,8 +8,7 @@ const sortingOptions = [
   { label: 'Top rated first', value: 'Top rated first' },
 ];
 
-export default function SortingOption({ handleChangeSorting }: ISortingProps): JSX.Element {
-  const currentSorting = useAppSelector((state) => state.sorting);
+export default function SortingOption({ currentSorting, handleChangeSorting }: ISortingOptionsProps): JSX.Element {
   return (
     <ul className='places__options places__options--custom places__options--opened'>
       {sortingOptions.map((option) => (

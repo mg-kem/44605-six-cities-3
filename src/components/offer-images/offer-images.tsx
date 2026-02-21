@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { IOfferImagesProps } from '../../types/types.props';
 
-export default function OfferImages({ images }: IOfferImagesProps): JSX.Element {
+function OfferImages({ images }: IOfferImagesProps): JSX.Element {
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">
@@ -13,3 +14,5 @@ export default function OfferImages({ images }: IOfferImagesProps): JSX.Element 
     </div>
   );
 }
+
+export default memo(OfferImages);

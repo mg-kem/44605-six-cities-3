@@ -1,39 +1,46 @@
 // Подключение вспомогательных файлов
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-
-// Подключение компонентов
 import OfferImages from '../../components/offer-images/offer-images';
 import OfferWrapper from '../../components/offer-wrapper/offer-wrapper';
 import OfferMap from '../../components/offer-map/offer-map';
 import PlaceCard from '../../components/place-card/place-card';
 import { IOffer } from '../../types/types';
 import { useParams } from 'react-router-dom';
-import { fetchNearbyOffersAction, fetchOfferIdAction, fetchReviewsAction } from '../../store/async-actions';
+import { fetchOfferByIdAsyncAction, fetchNearbyOffersAsyncAction } from '../../store/thunks/offers';
+import { fetchReviewsByIdAsyncAction } from '../../store/thunks/reviews';
 import { useAppSelector } from '../../hooks/useStore';
 import { useAppDispatch } from '../../hooks/useStore';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
+import Spinner from '../../components/spinner/spinner';
 
 export default function OfferPage(): JSX.Element {
-  const currentOffer = useAppSelector((state) => state.currentOffer); // Получаю выбранный offer из state
-  const nearbyOffers = useAppSelector((state) => state.nearbyOffers); // Получаю список предложений неподалеку из state
-  const currentCity = useAppSelector((state) => state.currentCity); // Получаю активный город
+  const currentCity = useAppSelector((state) => state.appReducer.currentCity);
+  const currentOffer = useAppSelector((state) => state.offers.offerById);
+  const nearbyOffers = useAppSelector((state) => state.offers.nearbyOffers);
+  const isLoading = useAppSelector((state) => state.offers.isLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const currentOfferImages = useMemo(() => currentOffer?.images ?? [], [currentOffer]);
 
   useEffect(() => {
     if (!id) {
       return;
     }
-    dispatch(fetchOfferIdAction({ id }))
+    dispatch(fetchOfferByIdAsyncAction({ id }))
       .unwrap()
-      .catch(() => navigate(AppRoute.NOT_FOUND)); // Запрашиваю с сервера данные по выбранному предложению
-    dispatch(fetchReviewsAction({ id })); // Запрашиваю отзывы по выбранному предложению
-    dispatch(fetchNearbyOffersAction({ id })); // Запрашиваю предложения неподалеку от выбранного предложения
-
+      .then(() => {
+        dispatch(fetchReviewsByIdAsyncAction({ id }));
+        dispatch(fetchNearbyOffersAsyncAction({ id }));
+      })
+      .catch(() => navigate(AppRoute.NOT_FOUND));
   }, [dispatch, navigate, id]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
 
   return (
@@ -43,14 +50,14 @@ export default function OfferPage(): JSX.Element {
       </Helmet>
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferImages images={currentOffer?.images || []} />
+          <OfferImages images={currentOfferImages} />
           <OfferWrapper currentOffer={currentOffer as IOffer} />
           {currentOffer && <OfferMap currentCity={currentCity} currentOffer={currentOffer} nearbyOffers={nearbyOffers} />}
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {nearbyOffers.slice(0, 3).map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
+                {nearbyOffers.map((offer) => <PlaceCard key={offer.id} offer={offer} />)}
               </div>
             </section>
           </div>

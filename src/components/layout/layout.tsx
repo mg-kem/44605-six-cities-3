@@ -1,24 +1,32 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const/const';
-import { getLayoutState } from './utils';
+import { getLayoutState } from '../../utils/utils';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStore';
-import { logoutAction } from '../../store/async-actions';
+import { logoutAsyncAction } from '../../store/thunks/user';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { memo } from 'react';
 
-export default function Layout(): JSX.Element {
+function Layout(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const globalState = useAppSelector((state) => state);
-  const { offers, isAuth, userData } = globalState;
+  const offers = useAppSelector((state) => state.offers.offers);
+  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const userData = useAppSelector((state) => state.user.userData);
   const countFavoritesOffers = offers.filter((offer) => offer.isFavorite).length;
   const isLoggedIn = isAuth === AuthorizationStatus.AUTH;
   const { linkClassName, divClassName, shouldRenderUser, shouldRenderFooter } = getLayoutState(pathname as AppRoute);
 
   const handleLogout = () => {
-    dispatch(logoutAction()).then(() => {
-      navigate(AppRoute.LOGIN);
-    });
+    dispatch(logoutAsyncAction())
+      .unwrap()
+      .then(() => {
+        navigate(AppRoute.LOGIN);
+      })
+      .catch(() => {
+        toast.error('Произошла ошибка обращения к серверу. Повторите попытку');
+      });
   };
 
   return (
@@ -39,6 +47,7 @@ export default function Layout(): JSX.Element {
                       <li className="header__nav-item user">
                         <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile">
                           <div className="header__avatar-wrapper user__avatar-wrapper">
+                            <img src={userData?.avatarUrl} />
                           </div>
                           <span className="header__user-name user__name">{userData?.email}</span>
                           <span className="header__favorite-count">{countFavoritesOffers}</span>
@@ -75,3 +84,5 @@ export default function Layout(): JSX.Element {
     </div >
   );
 }
+
+export default memo(Layout);

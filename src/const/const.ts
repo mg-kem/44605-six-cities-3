@@ -24,6 +24,7 @@ export enum APIRoute {
   LOGIN = '/six-cities/login',
   LOGOUT = '/six-cities/logout',
   COMMENTS = '/six-cities/comments',
+  FAVORITES = '/six-cities/favorite',
 }
 
 /** Перечисление статусов авторизации */

@@ -1,6 +1,10 @@
 import { useRef } from 'react';
 import { useAppDispatch } from '../../hooks/useStore';
-import { loginAction } from '../../store/async-actions';
+import { loginAsyncAction } from '../../store/thunks/user';
+import { fetchFavoriteOffersAsyncAction } from '../../store/thunks/favorites';
+import { toast } from 'react-toastify';
+import store from '../../store';
+import { fetchOffersAsyncAction } from '../../store/thunks/offers';
 
 export default function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -12,7 +16,16 @@ export default function SignIn(): JSX.Element {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     if (email && password) {
-      dispatch(loginAction({ email, password }));
+      dispatch(loginAsyncAction({ email, password }))
+        .unwrap()
+        .then(() => {
+          dispatch(fetchFavoriteOffersAsyncAction());
+          dispatch(fetchOffersAsyncAction());
+        })
+        .catch(() => {
+          const errorMessage = store.getState().user.error ?? 'Неверный логин или пароль';
+          toast.error(errorMessage);
+        });
     }
   };
 

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
-import { TState, TAppDispatch } from '../store/store';
+import { TState, TAppDispatch } from '../store/index';
 
 export const useAppDispatch = () => useDispatch<TAppDispatch>();
 // На основании типа TAppDispatch создаем хук useAppDispatch

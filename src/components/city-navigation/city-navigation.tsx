@@ -1,8 +1,6 @@
-// Подключение вспомогательных файлов
 import { Link } from 'react-router-dom';
 import { Cities } from '../../const/cities';
 import { ICityNavigationProps } from '../../types/types.props';
-
 
 export default function CityNavigation({ currentCity, onChangeCity }: ICityNavigationProps): JSX.Element {
   return (
