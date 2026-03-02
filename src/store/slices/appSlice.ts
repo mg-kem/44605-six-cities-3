@@ -7,7 +7,7 @@ interface IAppState {
   sorting: TSortingType;
 }
 
-const initialState: IAppState = {
+export const initialState: IAppState = {
   currentCity: Cities[0],
   sorting: 'Popular',
 };
