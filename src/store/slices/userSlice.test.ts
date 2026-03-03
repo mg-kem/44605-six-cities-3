@@ -11,8 +11,6 @@ describe('userReducer', () => {
   });
 
   describe('checkAuthLogin', () => {
-
-
     it('Должен обновить состояние загрузки isLoading', () => {
       const result = userReducer(initialState, checkAuthLoginAsyncAction.pending('', undefined));
       expect(result.isLoading).toBe(true);
@@ -41,7 +39,6 @@ describe('userReducer', () => {
   });
 
   describe('loginUser', () => {
-
     it('Должен обновить состояние загрузки isLoading', () => {
       const result = userReducer(initialState, loginAsyncAction.pending('', { email: 'test@test.com', password: 'test-password' }));
       expect(result.isLoading).toBe(true);
@@ -63,6 +60,27 @@ describe('userReducer', () => {
     it('Должен обновить состояние ошибки error', () => {
       const errorMessage = 'Test error message';
       const result = userReducer(initialState, loginAsyncAction.rejected(new Error(errorMessage), '', { email: 'test@test.com', password: 'test-password' }));
+      expect(result.error).toBe(errorMessage);
+      expect(result.isLoading).toBe(false);
+    });
+  });
+
+  describe('logoutUser', () => {
+    it('Должен обновить состояние загрузки isLoading', () => {
+      const result = userReducer(initialState, logoutAsyncAction.pending('', undefined));
+      expect(result.isLoading).toBe(true);
+    });
+
+    it('Должен обновить состояние авторизации isAuth', () => {
+      const result = userReducer(initialState, logoutAsyncAction.fulfilled(undefined, '', undefined));
+      expect(result.isAuth).toBe(AuthorizationStatus.NO_AUTH);
+      expect(result.isLoading).toBe(false);
+      expect(result.userData).toBe(null);
+    });
+
+    it('Должен обновить состояние ошибки error', () => {
+      const errorMessage = 'Test error message';
+      const result = userReducer(initialState, logoutAsyncAction.rejected(new Error(errorMessage), '', undefined));
       expect(result.error).toBe(errorMessage);
       expect(result.isLoading).toBe(false);
     });
