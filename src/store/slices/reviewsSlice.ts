@@ -9,7 +9,7 @@ interface IReviewsState {
   error: string | null;
 }
 
-const initialState: IReviewsState = {
+export const initialState: IReviewsState = {
   reviews: [],
   isLoading: false,
   isSending: false,
