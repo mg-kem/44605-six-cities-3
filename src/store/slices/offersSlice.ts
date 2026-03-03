@@ -11,7 +11,7 @@ interface IOfferState {
   error: string | null;
 }
 
-const initialState: IOfferState = {
+export const initialState: IOfferState = {
   offers: [],
   offerById: null,
   nearbyOffers: [],

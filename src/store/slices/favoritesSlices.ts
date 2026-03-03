@@ -8,7 +8,7 @@ interface IFavoriteOffersState {
   error: string | null;
 }
 
-const initialState: IFavoriteOffersState = {
+export const initialState: IFavoriteOffersState = {
   favoritesOffers: [],
   isLoading: false,
   error: null
