@@ -1,7 +1,10 @@
-# Личный проект «Шесть городов»
+# Six Cities — React SPA Application
 
-* Студент: [Дмитрий Гилёв](https://up.htmlacademy.ru/react-individual/3/user/44605).
-* Наставник: `Станислав Михайлов`.
+## Live Demo
+https://six-sities-seven.vercel.app/
+
+## GitHub
+https://github.com/mg-kem/44605-six-cities-3
 
 ---
 
@@ -26,6 +29,36 @@
 | **Уведомления** | react-toastify |
 | **Утилиты** | classnames, history, http-status-codes |
 | **Тестирование** | Vitest, Testing Library, @testing-library/jest-dom, axios-mock-adapter, jsdom |
+
+---
+
+## Features
+
+- загрузка предложений с REST API
+- авторизация пользователя
+- добавление предложений в избранное
+- фильтрация и сортировка объявлений
+- отображение предложений на карте
+- просмотр подробной страницы объявления
+- отображение отзывов
+- unit-тесты для Redux slices
+
+---
+
+## Architecture
+
+Проект построен по принципу разделения:
+
+- **UI components**
+- **business logic**
+- **state management**
+
+Используется:
+
+- Redux Toolkit (`createSlice`, `createAsyncThunk`)
+- feature-based структура
+- типизация API через TypeScript
+- изолированные Redux slices
 
 ---
 
